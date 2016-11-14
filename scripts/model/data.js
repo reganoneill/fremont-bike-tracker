@@ -9,7 +9,7 @@
     /* TODO: How would you like to fetch your repos? Someone say AJAX?!
       Do not forget to call the callback! */
       //DONE
-    $.ajax({
+    $.getJSON({
       // url: 'https://api.github.com/users/reganoneill/repos',
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json',
       type: 'GET',
@@ -20,6 +20,7 @@
 
         callback();
         console.log(data);
+        console.log('end data');
         // console.log(data.filter(function(a){
         //   return parseInt(a.fremont_bridge_nb) >= 375 && parseInt(a.fremont_bridge_sb) >= 300;
         // }));
