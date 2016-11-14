@@ -10,7 +10,7 @@
       <li>
         <!-- //values found here: https://api.github.com/users/codefellows-seattle-301d14/repos -->
         <a href="{{html_url}}" target="_blank"><h3>{{url}}</h3></a>
-        <p>Description: {{date}}</p>
+        <p>Date: {{date}}</p>
         <p>Northbound Traffic: {{fremont_bridge_nb}}</p>
         <p>Southbound Traffic: {{fremont_bridge_sb}}</p>
         <p>Last updated: {{updated_at}}</p>
@@ -43,7 +43,18 @@
 
       <div id="home" class="tab-content">
         <section id="projects" class="clearfix">
+
+          <!-- for jqueryui calendar -->
           <h1 class="center-element">My Work</h1>
+          <h2 class="first-date"></h2>
+          <h2 class="second-date"></h2>
+          <!-- <p>Date: <input type="text" id="datepicker"></p> -->
+          <label for="from">From</label><input type="text" id="from" name="from">
+          <label for="to">to</label><input type="text" id="to" name="to">
+          <button>Submit</button>
+          <!-- end jqueryui calendar -->
+
+
             <article class="project-details">
                 <!-- all project descriptions get appended here. -->
             </article>
@@ -66,6 +77,10 @@
     <!-- just added page.js -->
     <script src="vendor/scripts/page.js"></script>
     <script src="vendor/scripts/handlebars.js"></script>
+<<<<<<< HEAD
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+=======
+>>>>>>> aee6ba1f10ab4143297b1991fbb765f4b141e7de
     <script src="vendor/scripts/moment.js"></script>
     <script src="/scripts/model/data.js"></script>
     <script src="/scripts/view/dataView.js"></script>
