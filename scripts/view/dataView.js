@@ -3,18 +3,12 @@
   var trafficView = {};
   traffic.date1, traffic.date2;
 
-  $('#submit-dates').on('click', function(e){
-    e.preventDefault();
-    traffic.date1 = $('input#from').val();
-    traffic.date2 = $('input#to').val();
-  });
-
+  
   var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
   trafficView.renderTraffic = function() {
     $('#stats').empty().append(
       traffic.allTraffic
-
       .map(trafficCompiler)
     );
   };
@@ -70,7 +64,6 @@
 
 
   traffic.datePick();
-  traffic.requestTraffic(trafficView.renderTraffic);
 
 
 
