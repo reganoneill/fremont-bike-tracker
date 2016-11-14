@@ -61,6 +61,7 @@
   };
 // end date range picker from jqueryui.com
 
+
   traffic.datePick();
   traffic.requestTraffic(trafficView.renderTraffic);
 
