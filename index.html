@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>fremont bikers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
     <!-- HANDLEBARS TEMPLATING SCRIPTS -->
     <script id="traffic-template" type="text/x-handlebars-template">
       <li>
@@ -37,6 +38,9 @@
       </div>
     </header>
     <main>
+      <label for="from">From</label><input type="text" id="from" name="from">
+       <label for="to">to</label><input type="text" id="to" name="to">
+
       <div id="home" class="tab-content">
         <section id="projects" class="clearfix">
           <h1 class="center-element">My Work</h1>
@@ -58,9 +62,11 @@
       </div>
     </footer>
     <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <!-- just added page.js -->
     <script src="vendor/scripts/page.js"></script>
     <script src="vendor/scripts/handlebars.js"></script>
+    <script src="vendor/scripts/moment.js"></script>
     <script src="/scripts/model/data.js"></script>
     <script src="/scripts/view/dataView.js"></script>
     <script src="scripts/controller/dataController.js"></script>
