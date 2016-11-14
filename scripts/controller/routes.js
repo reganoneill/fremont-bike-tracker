@@ -1,15 +1,8 @@
-/* TODO: Configure our two routes for this app with page.js,
-    by registering each URL your app can handle, linked to a
-    single controller function to handle it: */
+'use strict';
 page('/', home);
 page('/about', about);
 page('/stats', stats);
-function home(){
-  projectController.reveal();
-}
-function about() {
-  aboutController.reveal();
-}
+
 function stats(){
   statsController.reveal();
 }

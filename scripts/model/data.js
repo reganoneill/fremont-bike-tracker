@@ -1,23 +1,35 @@
+'use strict';
 (function(module) {
   var repos = {};
   repos.allRepos=[];
   repos.northVals = [];
   repos.southVals = [];
-// TODO: create a githubToken.js file that we can use to generate our headers
-         // properly.
+
   repos.requestRepos = function(callback) {
     /* TODO: How would you like to fetch your repos? Someone say AJAX?!
       Do not forget to call the callback! */
       //DONE
     $.getJSON({
-      // url: 'https://api.github.com/users/reganoneill/repos',
+  var traffic = {};
+  traffic.allTraffic = [];
+  traffic.northVals = [];
+  traffic.southVals = [];
+  var total = 0;
+  var peakNB = {};
+  var peakSB = {nb:0,sb:0};
+  var peak = {peak:0};
+
+});
+};
+
+  traffic.requestTraffic = function(callback) {
+
+    $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json',
       type: 'GET',
-      // headers: {'Authorization': 'token ' + githubToken},
-      success: function(data, message, xhr){
+      success: function(data, message){
         console.log(message);
-        repos.allRepos = data;
-
+        traffic.allTraffic = data;
         callback();
         console.log(data);
         console.log('end data');
@@ -29,52 +41,26 @@
 
   };
 
-  repos.withTheAttribute = function(myAttr) {
-    /* NOTE: This Model method filters the full repos collection based
-        on a particular attribute. For example, you could use this
-        to filter all repos that have a forks_count, stargazers_count,
-        or watchers_count. */
-    return repos.allRepos.filter(function(aRepo) {
+  traffic.withTheAttribute = function(myAttr) {
+    return traffic.allTraffic.filter(function(aRepo) {
       return aRepo[myAttr];
     });
   };
 
-  module.repos = repos;
+  traffic.calcNumbers = function(){
+    traffic.allTraffic.forEach(function(data){
+      var nb = parseInt(data.fremont_bridge_nb);
+      var sb = parseInt(data.fremont_bridge_sb);
+      if (nb > peakNB.nb){
+        peakNB = data;
+        console.log(peakNB);
+      }
+      var hourlyTotal = nb + sb;
+      total += hourlyTotal;
+    });
+    console.log(total);
+  };
+
+
+  module.traffic = traffic;
 })(window);
-
-
-// (function(module) {
-//   var reposObj = {};
-//
-//   reposObj.requestRepos = function(callback) {
-//     // NOTE: refactor this request into an $.get call
-//     $.when(
-//      $.get('/github/users/reganoneill/repos', function(data){
-//        console.log('about to run repo data...');
-//        reposObj.allRepos = data;
-//        console.log(data);
-//        console.log('done running repo data...');
-//      }),
-//      $.get('/github/users/reganoneill/followers', function(data){
-//        reposObj.followers = data;
-//        console.log('next - followers: ');
-//        console.log(data);
-//        console.log('done logging followers');
-//      })
-//     ).done(callback);
-//   };
-//
-//   reposObj.withTheAttribute = function(attr) {
-//     return reposObj.allRepos.filter(function(aRepo) {
-//       return aRepo[attr];
-//     });
-//   };
-//
-//   module.reposObj = reposObj;
-// })(window);
-// function getFieldsTest(input, field) {
-//   var output = [];
-//   for (var i=0; i < input.length ; ++i)
-//     output.push({input['fremont_bridge_nb']: input[i].fremont_bridge_nb});
-//   return output;
-// }
