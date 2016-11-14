@@ -1,0 +1,19 @@
+{
+  "name": "fremont-bike-tracker",
+  "version": "1.0.0",
+  "description": "team project for code fellows 301",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reganoneill/fremont-bike-tracker.git"
+  },
+  "author": "regan marc erick pavel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reganoneill/fremont-bike-tracker/issues"
+  },
+  "homepage": "https://github.com/reganoneill/fremont-bike-tracker#readme"
+}
