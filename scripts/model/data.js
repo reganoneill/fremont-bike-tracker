@@ -27,6 +27,7 @@
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json',
       type: 'GET',
+      X-App-Token: 'Cdf65uwP629blb2lqe4dYGmT1';
       success: function(data, message){
         console.log(message);
         traffic.allTraffic = data;
