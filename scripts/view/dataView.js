@@ -2,12 +2,12 @@
 (function(module) {
   var trafficView = {};
   traffic.date1, traffic.date2;
+  
   var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
   trafficView.renderTraffic = function() {
     $('#stats').empty().append(
       traffic.allTraffic
-
       .map(trafficCompiler)
     );
   };
@@ -61,8 +61,9 @@
   };
 // end date range picker from jqueryui.com
 
+
   traffic.datePick();
-  traffic.requestTraffic(trafficView.renderTraffic);
+
 
 
   module.trafficView = trafficView;

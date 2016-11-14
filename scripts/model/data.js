@@ -24,7 +24,6 @@
     });
   };
 
-  // var test = ;
 
   traffic.requestTraffic = function(callback) {
     var add = '?$where=date>=%272013-01-01T00:00.000%27';
@@ -37,9 +36,9 @@
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
       type: 'GET',
       success: function(data){
-        callback();
-        console.log(data);
-        traffic.loadAll(data);
+      callback();
+      console.log(data);
+      traffic.loadAll(data);
       }
     });
 

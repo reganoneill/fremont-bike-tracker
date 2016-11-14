@@ -21,6 +21,8 @@
 ///////////////////////////////////////////
 //END
 ///////////////////////////////////////////
+var moment = require('moment');
+moment().format();
 
 var express = require('express'),
 //we added the below line in class
@@ -51,4 +53,3 @@ app.get('*', function(request, response) {
 app.listen(port, function() {
   console.log('Server started on port ' + port + '!');
 });
-
