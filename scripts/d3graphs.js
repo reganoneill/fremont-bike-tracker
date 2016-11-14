@@ -17,3 +17,9 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
   .scale(y)
   .orient('left');
+
+var chart = d3.select('.chart')
+  .attr('width', width + margin.left + margin.right)
+  .attr('height', height + margin.top + margin.bottom)
+  .append('g')
+  .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
