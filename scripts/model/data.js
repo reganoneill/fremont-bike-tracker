@@ -1,79 +1,94 @@
+'use strict';
 (function(module) {
-  var repos = {};
-  repos.allRepos=[];
-  repos.northVals = [];
-  repos.southVals = [];
-// TODO: create a githubToken.js file that we can use to generate our headers
-         // properly.
-  repos.requestRepos = function(callback) {
-    /* TODO: How would you like to fetch your repos? Someone say AJAX?!
-      Do not forget to call the callback! */
-      //DONE
-    $.ajax({
-      // url: 'https://api.github.com/users/reganoneill/repos',
-      url: 'https://data.seattle.gov/resource/4xy5-26gy.json',
-      type: 'GET',
-      // headers: {'Authorization': 'token ' + githubToken},
-      success: function(data, message, xhr){
-        console.log(message);
-        repos.allRepos = data;
+  var traffic = {};
+  traffic.allTraffic = [];
+  traffic.northVals = [];
+  traffic.southVals = [];
+  var total = 0;
+  var avg = 0;
+  var peakNB = {nb:0, sb:0};
+  var peakSB = {nb:0, sb:0};
+  var peak = {peak:0};
 
+  function Traffic (opts) {
+    Object.keys(opts).forEach(function(prop) {
+      this[prop] = opts[prop];
+    }, this);
+  };
+
+  traffic.loadAll = function(inputData) {
+    traffic.allTraffic = inputData.sort(function(a,b) {
+      return (new Date(b.date)) - (new Date(a.date));
+    }).map(function(ele) {
+      return new Traffic(ele);
+    });
+  };
+
+  // var test = ;
+
+  traffic.requestTraffic = function(callback) {
+    var add = '?$where=date>=%272013-01-01T00:00.000%27';
+    // var searchSpecific = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + traffic.date1.getMonth() + '-' + traffic.date1.getDate()
+    //   + 'T00:00.000%27%20AND%20date%%3C=%27' + traffic.date2.getFullYear() + '-' + traffic.date2.getMonth() + '-' + traffic.date2.getDate() + 'T00:00.000%27';
+  //  var add = (limitScope) ? searchSpecific : searchAll;
+    var limit = '&$limit=1000';
+    var order = '&$order=date';
+    $.ajax({
+      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
+      type: 'GET',
+      success: function(data){
         callback();
         console.log(data);
-        // console.log(data.filter(function(a){
-        //   return parseInt(a.fremont_bridge_nb) >= 375 && parseInt(a.fremont_bridge_sb) >= 300;
-        // }));
+        traffic.loadAll(data);
       }
     });
 
   };
 
-  repos.withTheAttribute = function(myAttr) {
-    /* NOTE: This Model method filters the full repos collection based
-        on a particular attribute. For example, you could use this
-        to filter all repos that have a forks_count, stargazers_count,
-        or watchers_count. */
-    return repos.allRepos.filter(function(aRepo) {
+
+  traffic.withTheAttribute = function(myAttr) {
+    return traffic.allTraffic.filter(function(aRepo) {
       return aRepo[myAttr];
     });
   };
 
-  module.repos = repos;
+  traffic.calcNumbers = function(){
+    traffic.allTraffic.forEach(function(data, idx){
+      var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
+      var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
+      if (nb > peakNB.nb){
+        peakNB.nb = nb;
+        peakNB.sb = sb;
+        peakNB.date = data.date;
+      }
+      if (sb > peakSB.sb){
+        peakSB.nb = nb;
+        peakSB.sb = sb;
+        peakSB.date = data.date;
+      }
+      var hourlyTotal = nb + sb;
+      if (hourlyTotal > peak.peak){
+        peak.nb = nb;
+        peak.sb = sb;
+        peak.peak = hourlyTotal;
+        peak.date = data.date;
+      }
+      if (total === null){
+        alert(idx);
+      }
+      console.log(total);
+      total += hourlyTotal;
+      avg = total / (idx + 1);
+    });
+    console.log(total, ' is total');
+    console.log(avg, ' is avg');
+    console.log(peakNB, ' is peakNB');
+    console.log(peakSB, ' is peakSB');
+    console.log(peak, 'is overall Peak');
+  };
+
+  //var date = moment(traffic.allTraffic[0].date).format('h-DD-MM-YYYY');
+
+
+  module.traffic = traffic;
 })(window);
-
-
-// (function(module) {
-//   var reposObj = {};
-//
-//   reposObj.requestRepos = function(callback) {
-//     // NOTE: refactor this request into an $.get call
-//     $.when(
-//      $.get('/github/users/reganoneill/repos', function(data){
-//        console.log('about to run repo data...');
-//        reposObj.allRepos = data;
-//        console.log(data);
-//        console.log('done running repo data...');
-//      }),
-//      $.get('/github/users/reganoneill/followers', function(data){
-//        reposObj.followers = data;
-//        console.log('next - followers: ');
-//        console.log(data);
-//        console.log('done logging followers');
-//      })
-//     ).done(callback);
-//   };
-//
-//   reposObj.withTheAttribute = function(attr) {
-//     return reposObj.allRepos.filter(function(aRepo) {
-//       return aRepo[attr];
-//     });
-//   };
-//
-//   module.reposObj = reposObj;
-// })(window);
-// function getFieldsTest(input, field) {
-//   var output = [];
-//   for (var i=0; i < input.length ; ++i)
-//     output.push({input['fremont_bridge_nb']: input[i].fremont_bridge_nb});
-//   return output;
-// }
