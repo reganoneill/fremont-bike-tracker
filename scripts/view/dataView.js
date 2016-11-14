@@ -1,29 +1,19 @@
+'use strict';
 (function(module) {
-  var repoView = {};
-  /* NOTE: Let's setup our new template!
-      Save the result in this `repoCompiler` variable that we will pass to
-      the append method below. */
-  var repoCompiler = Handlebars.compile($('#repo-template').html());
+  var trafficView = {};
 
-  // repoView.allRepos.forEach(function(a) {
-  //   $('#stats').append(a.toHtml($('#repo-template')));
-  // });
+  var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
-  /* NOTE: If all the data is loaded, we can
-      render the repos. */
-  repoView.renderRepos = function() {
+  trafficView.renderTraffic = function() {
     $('#stats').empty().append(
-      repos.allRepos
-      // repos.withTheAttribute('url')
-      .map(repoCompiler)
+      traffic.allTraffic
+
+      .map(trafficCompiler)
     );
   };
-  /* NOTE: Call the function that loads (or 'requests') our repo data.
-    Pass in our view function as a higher order callback, so our repos
-    will render AFTER the data is loaded. */
-  // reposObj.requestRepos(repoView.renderRepos);
-  repos.requestRepos(repoView.renderRepos);
+
+  traffic.requestTraffic(trafficView.renderTraffic);
 
 
-  module.repoView = repoView;
+  module.trafficView = trafficView;
 })(window);

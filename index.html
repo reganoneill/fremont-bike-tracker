@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>fremont bikers</title>
     <!-- HANDLEBARS TEMPLATING SCRIPTS -->
-    <script id="repo-template" type="text/x-handlebars-template">
+    <script id="traffic-template" type="text/x-handlebars-template">
       <li>
         <!-- //values found here: https://api.github.com/users/codefellows-seattle-301d14/repos -->
         <a href="{{html_url}}" target="_blank"><h3>{{url}}</h3></a>
         <p>Description: {{date}}</p>
         <p>Northbound Traffic: {{fremont_bridge_nb}}</p>
         <p>Southbound Traffic: {{fremont_bridge_sb}}</p>
-        <!-- <p>Primary Language: {{language}}</p> -->
-        <!-- <p>Created: {{created_at}}</p> -->
         <p>Last updated: {{updated_at}}</p>
-        <!-- {{#if watchers_count}}
-          <p>{{watchers_count}} watching this repo</p>
-        {{/if}} -->
+
       </li>
     </script>
 <!-- END HANDLEBARS TEMPLATING SCRIPT -->  </head>
@@ -64,9 +60,7 @@
     <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <!-- just added page.js -->
     <script src="vendor/scripts/page.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
-    <!-- <script src="scripts/siteProjects.js"></script> -->
-    <!-- <script src="/githubToken.js"></script> -->
+    <script src="vendor/scripts/handlebars.js"></script>
     <script src="/scripts/model/data.js"></script>
     <script src="/scripts/view/dataView.js"></script>
     <script src="scripts/controller/dataController.js"></script>
