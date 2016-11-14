@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>fremont bikers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
     <!-- HANDLEBARS TEMPLATING SCRIPTS -->
     <script id="traffic-template" type="text/x-handlebars-template">
       <li>
@@ -39,7 +40,18 @@
     <main>
       <div id="home" class="tab-content">
         <section id="projects" class="clearfix">
+
+          <!-- for jqueryui calendar -->
           <h1 class="center-element">My Work</h1>
+          <h2 class="first-date"></h2>
+          <h2 class="second-date"></h2>
+          <!-- <p>Date: <input type="text" id="datepicker"></p> -->
+          <label for="from">From</label><input type="text" id="from" name="from">
+          <label for="to">to</label><input type="text" id="to" name="to">
+          <button>Submit</button>
+          <!-- end jqueryui calendar -->
+
+
             <article class="project-details">
                 <!-- all project descriptions get appended here. -->
             </article>
@@ -61,6 +73,8 @@
     <!-- just added page.js -->
     <script src="vendor/scripts/page.js"></script>
     <script src="vendor/scripts/handlebars.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="vendor/scripts/moment.js"></script>
     <script src="/scripts/model/data.js"></script>
     <script src="/scripts/view/dataView.js"></script>
     <script src="scripts/controller/dataController.js"></script>
