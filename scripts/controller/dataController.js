@@ -1,8 +1,8 @@
 'use strict';
 (function(module) {
-  var statsController = {};
+  var dataController = {};
 
-  statsController.reveal = function() {
+  dataController.reveal = function() {
     /* TODO: Use your DOM skills to reveal only the about section! */
     //MAKE SURE THIS WORKS...
     $('#projects').hide();
@@ -10,5 +10,5 @@
     $('#stats').show();
   };
 
-  module.statsController = statsController;
+  module.dataController = dataController;
 })(window);
