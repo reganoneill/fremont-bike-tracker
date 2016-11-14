@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>fremont bikers</title>
+    <!-- HANDLEBARS TEMPLATING SCRIPTS -->
+    <script id="repo-template" type="text/x-handlebars-template">
+      <li>
+        <!-- //values found here: https://api.github.com/users/codefellows-seattle-301d14/repos -->
+        <a href="{{html_url}}" target="_blank"><h3>{{url}}</h3></a>
+        <p>Description: {{date}}</p>
+        <p>Northbound Traffic: {{fremont_bridge_nb}}</p>
+        <p>Southbound Traffic: {{fremont_bridge_sb}}</p>
+        <!-- <p>Primary Language: {{language}}</p> -->
+        <!-- <p>Created: {{created_at}}</p> -->
+        <p>Last updated: {{updated_at}}</p>
+        <!-- {{#if watchers_count}}
+          <p>{{watchers_count}} watching this repo</p>
+        {{/if}} -->
+      </li>
+    </script>
+<!-- END HANDLEBARS TEMPLATING SCRIPT -->  </head>
+  <body>
+    <header class="site-header clearfix">
+      <div class="header-container">
+        <div class="header-left">
+            <p class="fa fa-certificate">  Fremont Bridge Bike Tracker</p>
+        </div>
+        <div class="header-right">
+          <nav class="main-nav">
+            <div class="fa fa-bars"></div>
+            <div class="nav-overlay">
+              <ul>
+                <li class="tab" data-content="home"><a href="/">Home</a></li>
+                <li class="tab" data-content="stats"><a href="/stats">Stats</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div id="home" class="tab-content">
+        <section id="projects" class="clearfix">
+          <h1 class="center-element">My Work</h1>
+            <article class="project-details">
+                <!-- all project descriptions get appended here. -->
+            </article>
+            <article class="project-summary">
+                <!-- all project descriptions get appended here. -->
+            </article>
+        </section>
+      </div>
+      <section id="stats">
+        <!-- handlebars script '#repo-template' will get appended here -->
+      </section>
+    </main>
+    <footer>
+      <div class="center-element">
+        <p class="footer-name">Fremont Bike Tracker 2016</p>
+      </div>
+    </footer>
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <!-- just added page.js -->
+    <script src="vendor/scripts/page.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
+    <!-- <script src="scripts/siteProjects.js"></script> -->
+    <!-- <script src="/githubToken.js"></script> -->
+    <script src="/scripts/models/data.js"></script>
+    <script src="/scripts/views/dataView.js"></script>
+    <script src="scripts/controller/statsController.js"></script>
+    <script src="scripts/controller/routes.js"></script>
+  </body>
+</html>
