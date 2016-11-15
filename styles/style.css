@@ -67,6 +67,7 @@ body, html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
 }
 
 .bgimg-1 {
@@ -110,7 +111,20 @@ h3 {
 }
 
 /*Ericks code*/
+
 .bar {
   fill: #c29970;
   box-shadow:10px 10px;
+}
+
+.axisWhite line{
+  stroke: white;
+}
+
+.axisWhite path{
+  stroke: white;
+}
+
+.axisWhite text{
+  fill: white;
 }

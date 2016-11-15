@@ -1,7 +1,7 @@
 'use strict';
 
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
-  width = 420 - margin.left - margin.right,
+  width = 540 - margin.left - margin.right,
   height = 300 - margin.top - margin.bottom;
 
 var x = d3.scaleBand()
@@ -32,9 +32,11 @@ d3.json('../../example.json', function(error, data) {
 
   svg.append('g')
     .attr('transform', 'translate(0,' + height + ')')
+    .attr('class', 'axisWhite')
     .call(d3.axisBottom(x));
 
   svg.append('g')
+    .attr('class', 'axisWhite')
     .call(d3.axisLeft(y));
 
   svg.selectAll('.bar')
