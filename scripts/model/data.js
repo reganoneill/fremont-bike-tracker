@@ -36,7 +36,7 @@
     } else {
       add = '?$where=date>=%272013-01-01T00:00.000%27';
     }
-    var limit = '&$limit=1000';
+    var limit = '&$limit=50000';
     var order = '&$order=date';
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
@@ -57,10 +57,38 @@
     });
   };
 
+  traffic.getHour = function(dateTime){
+    return parseInt(moment(dateTime).format('H'));
+  };
+
+
   traffic.calcNumbers = function(){
+    traffic.numberOfDays = (traffic.allTraffic.length / 24);
+    traffic.hourlyArrayAll = Array(24).fill(0);
+    traffic.hourlyArrayNb = Array(24).fill(0);
+    traffic.hourlyArraySb = Array(24).fill(0);
+    traffic.hourlyAvgAll = Array(24).fill(0);
+    traffic.hourlyAvgNb = Array(24).fill(0);
+    traffic.hourlyAvgSb = Array(24).fill(0);
+
+
     traffic.allTraffic.forEach(function(data, idx){
       var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
       var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
+
+      console.log(nb + sb, ' : nb + sb', traffic.getHour(data.date), ' : traffic.getHour(data.date)');
+      // console.log(traffic.hourlyArray[traffic.getHour(data.date)]);
+
+      traffic.hourlyArrayAll[traffic.getHour(data.date)] += (nb + sb);
+      traffic.hourlyArrayNb[traffic.getHour(data.date)] += (nb);
+      traffic.hourlyArraySb[traffic.getHour(data.date)] += (sb);
+
+      traffic.hourlyArrayAll.forEach(function(data, idx){
+        traffic.hourlyAvgAll[idx] = (traffic.hourlyArrayAll[idx] / traffic.numberOfDays).toFixed(2);
+        traffic.hourlyAvgNb[idx] = traffic.hourlyArrayNb[idx] / traffic.numberOfDays.toFixed(2);
+        traffic.hourlyAvgSb[idx] = traffic.hourlyArraySb[idx] / traffic.numberOfDays.toFixed(2);
+      });
+
       if (nb > peakNB.nb){
         peakNB.nb = nb;
         peakNB.sb = sb;
@@ -90,6 +118,7 @@
     console.log(peakSB, ' is peakSB');
     console.log(peak, 'is overall Peak');
   };
+
 
   //var date = moment(traffic.allTraffic[0].date).format('h-DD-MM-YYYY');
 
