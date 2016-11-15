@@ -25,7 +25,15 @@
   background-color: #282E34;
   text-align:center;
   padding: 50px 80px;
-  text-align: justify;
+  text-align: center;
+}
+
+.dataTitle{
+  margin-bottom: 20px
+}
+
+.celectors{
+    border-style: none;
 }
 
 #submit-dates{
@@ -35,13 +43,17 @@
     padding: 3px 12px;
     text-align: center;
     text-decoration: none;
-    transition-duration: 0.5s;
+    transition-duration: 0.4s;
     cursor: pointer;
 }
 
 #submit-dates:hover {
     background-color: #c29970;
     color: white;
+  }
+
+  .totalCross{
+    margin-top: 20px;
   }
 
 .bridgeHistory{
@@ -127,4 +139,8 @@ h3 {
 
 .axisWhite text{
   fill: white;
+}
+
+svg{
+  display: none;
 }

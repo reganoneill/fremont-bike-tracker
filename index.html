@@ -31,11 +31,25 @@
   <div class="bgimg-2"></div>
 
   <div class="dataGraph">
-      <h3>Data</h3>
+      <h3 class="dataTitle">Data</h3>
       <label for="from">From </label><input type="text" id="from" name="from">
       <label for="to"> to </label><input type="text" id="to" name="to">
+      <select class="celectors">
+        <option value="empty"></option>
+        <option value="perYear">Total Per Year</option>
+        <option value="perMonth">Average Per Month</option>
+        <option value="perDay">Average Per Day</option>
+        <option value="perHour">Average Per Hour</option>
+      </select>
       <button id="submit-dates">Submit</button>
       <section id="stats"></section>
+      <section class="totalCross">
+        <p>Total Bikes Crossed: 2351563</p>
+        <br>
+        <p>Total North Bound: 3842834</p>
+        <br>
+        <p>Total South Bound: 325346</p>
+      </section>
   </div>
 
   <div class="bgimg-3"></div>
