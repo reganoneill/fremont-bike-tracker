@@ -5,8 +5,10 @@
 
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
-    traffic.date1 = $('input#from').val();
-    traffic.date2 = $('input#to').val();
+    traffic.limitDates = true;
+    // traffic.date1 = $('input#from').val();
+    // traffic.date2 = $('input#to').val();
+    traffic.requestTraffic(trafficView.renderTraffic);
   });
 
   var trafficCompiler = Handlebars.compile($('#traffic-template').html());
@@ -14,7 +16,6 @@
   trafficView.renderTraffic = function() {
     $('#stats').empty().append(
       traffic.allTraffic
-
       .map(trafficCompiler)
     );
   };
@@ -46,8 +47,7 @@
       var date;
       try {
         date = $.datepicker.parseDate( dateFormat, element.value );
-        console.log(date);
-        console.log(element.value);
+
         // console.log(date.getDate());
         // console.log(date.getMonth());
         // console.log(date.getFullYear());
@@ -62,14 +62,10 @@
       return date;
     }
 
-    // var calTo = $('input#to').val();
-    // console.log(calFrom);
-    // console.log(calTo);
   };
 // end date range picker from jqueryui.com
 
   traffic.datePick();
-  traffic.requestTraffic(trafficView.renderTraffic);
 
 
 

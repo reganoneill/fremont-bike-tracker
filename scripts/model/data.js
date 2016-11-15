@@ -22,26 +22,28 @@
     }).map(function(ele) {
       return new Traffic(ele);
     });
+    console.log(traffic.allTraffic);
+    console.log('after turning each into a Traffic object');
   };
 
 
   traffic.requestTraffic = function(callback) {
-    var add = '?$where=date>=%272013-01-01T00:00.000%27';
-    // var searchSpecific = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + traffic.date1.getMonth() + '-' + traffic.date1.getDate()
-    //   + 'T00:00.000%27%20AND%20date%%3C=%27' + traffic.date2.getFullYear() + '-' + traffic.date2.getMonth() + '-' + traffic.date2.getDate() + 'T00:00.000%27';
-  //  var add = (limitScope) ? searchSpecific : searchAll;
-    var limit = '&$limit=1000';
+    total = 0;
+    var searchAll = '?$where=date>=%272013-01-01T00:00.000%27';
+    var searchSpecific = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth()+1) + '-' + traffic.date1.getDate()
+           + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth()+1) + '-' + traffic.date2.getDate() + 'T00:00.000%27';
+    var add = (traffic.limitDates) ? searchSpecific : searchAll;
+    // var limit = '&$limit=1000';
     var order = '&$order=date';
     $.ajax({
-      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
+      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + order,
       type: 'GET',
       success: function(data){
       callback();
-      console.log(data);
+      // console.log(data);
       traffic.loadAll(data);
       }
     });
-
   };
 
 
