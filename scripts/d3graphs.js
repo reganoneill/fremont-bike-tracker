@@ -41,8 +41,14 @@ d3.json('../../example.json', function(error, data) {
     .data(data)
     .enter().append('rect')
     .attr('class', 'bar')
-    .attr('x', function(d) { return x(d.name); })
+    .attr('x', function(d) {
+      return x(d.name);
+    })
     .attr('width', x.bandwidth())
-    .attr('y', function(d) { return y(d.value); })
-    .attr('height', function(d) { return height - y(d.value); });
+    .attr('y', function(d) {
+      return y(d.value);
+    })
+    .attr('height', function(d) {
+      return height - y(d.value);
+    });
 });
