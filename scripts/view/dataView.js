@@ -6,8 +6,13 @@
 
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
-
-    traffic.limitDates = true;
+    if ($('input#from').val() === ''){
+      console.log('here');
+      traffic.limitDates = false;
+    }
+    else {
+      traffic.limitDates = true;
+    }
     traffic.requestTraffic(trafficView.renderTraffic);
 
   });

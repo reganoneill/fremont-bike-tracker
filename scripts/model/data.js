@@ -4,6 +4,7 @@
   traffic.allTraffic = [];
   traffic.northVals = [];
   traffic.southVals = [];
+  traffic.limitDates = false;
   var total = 0;
   var avg = 0;
   var peakNB = {nb:0, sb:0};
@@ -28,11 +29,13 @@
 
   traffic.requestTraffic = function(callback) {
     total = 0;
-    var searchAll = '?$where=date>=%272013-01-01T00:00.000%27';
-    var searchSpecific = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
-       + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
-    // var searchSpecific = '?$where=date%3E=%272016-10-10T00:00.000%27%20AND%20date%3C=%272016-10-11T00:00.000%27'
-    var add = (traffic.limitDates) ? searchSpecific : searchAll;
+    var add;
+    if (traffic.limitDates){
+      add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
+      + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+    } else {
+      add = '?$where=date>=%272013-01-01T00:00.000%27';
+    }
     var limit = '&$limit=1000';
     var order = '&$order=date';
     $.ajax({
