@@ -2,18 +2,25 @@
 (function(module) {
   var trafficView = {};
   traffic.date1, traffic.date2;
+  var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
-    traffic.limitDates = true;
-    // traffic.date1 = $('input#from').val();
-    // traffic.date2 = $('input#to').val();
+
+    if ($('input#from').val() === ''){
+      console.log('here');
+      traffic.limitDates = false;
+    }
+    else {
+      traffic.limitDates = true;
+    }
     traffic.requestTraffic(trafficView.renderTraffic);
+
   });
 
-  var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
   trafficView.renderTraffic = function() {
+    traffic.calcNumbers();
     $('#stats').empty().append(
       traffic.allTraffic
       .map(trafficCompiler)
@@ -64,6 +71,7 @@
 
   };
 // end date range picker from jqueryui.com
+
 
   traffic.datePick();
 
