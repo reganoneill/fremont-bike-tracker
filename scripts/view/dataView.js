@@ -2,10 +2,18 @@
 (function(module) {
   var trafficView = {};
   traffic.date1, traffic.date2;
-  
   var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
+  $('#submit-dates').on('click', function(e){
+    e.preventDefault();
+
+    traffic.limitDates = true;
+    traffic.requestTraffic(trafficView.renderTraffic);
+
+  });
+
   trafficView.renderTraffic = function() {
+    traffic.calcNumbers();
     $('#stats').empty().append(
       traffic.allTraffic
       .map(trafficCompiler)
@@ -39,8 +47,8 @@
       var date;
       try {
         date = $.datepicker.parseDate( dateFormat, element.value );
-        console.log(date);
-        console.log(element.value);
+        // console.log(date);
+        // console.log(element.value);
         // console.log(date.getDate());
         // console.log(date.getMonth());
         // console.log(date.getFullYear());
