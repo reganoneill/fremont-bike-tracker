@@ -17,6 +17,7 @@
 
   });
 
+
   trafficView.renderTraffic = function() {
     traffic.calcNumbers();
     $('#stats').empty().append(
