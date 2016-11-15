@@ -28,6 +28,22 @@
   text-align: justify;
 }
 
+#submit-dates{
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 3px 12px;
+    text-align: center;
+    text-decoration: none;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+#submit-dates:hover {
+    background-color: #c29970;
+    color: white;
+  }
+
 .bridgeHistory{
   position: relative;
   color: #ddd;
