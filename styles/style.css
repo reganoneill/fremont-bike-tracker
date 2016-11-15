@@ -51,19 +51,20 @@ body, html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
 }
 
 .bgimg-1 {
-  background-image: url("../imgs/FremontBridgeOpen.jpg");
+  background-image: url("imgs/FremontBridgeOpen.jpg");
   min-height: 600px;
 }
 
 .bgimg-2 {
-  background-image: url("../imgs/FremontBridgeClosed.jpg");
+  background-image: url("imgs/FremontBridgeClosed.jpg");
   min-height: 600px;
 }
 .bgimg-3 {
-  background-image: url("../imgs/FremontBridgeWall.jpg");
+  background-image: url("imgs/FremontBridgeWall.jpg");
   min-height: 600px;
 }
 
@@ -94,7 +95,20 @@ h3 {
 }
 
 /*Ericks code*/
+
 .bar {
   fill: #c29970;
   box-shadow:10px 10px;
+}
+
+.axisWhite line{
+  stroke: white;
+}
+
+.axisWhite path{
+  stroke: white;
+}
+
+.axisWhite text{
+  fill: white;
 }
