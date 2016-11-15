@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-request-proxy": "^2.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/reganoneill/fremont-bike-tracker.git"
