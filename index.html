@@ -8,6 +8,7 @@
   <link rel="icon" href="imgs/bike.ico" type="image/x-icon">
   <script id="traffic-template" type="text/x-handlebars-template">
     <li>
+
       <p>Date: {{date}}</p>
       <p>Northbound Traffic: {{fremont_bridge_nb}}</p>
       <p>Southbound Traffic: {{fremont_bridge_sb}}</p>
@@ -43,17 +44,7 @@
       </select>
       <button id="submit-dates">Submit</button>
       <section id="stats"></section>
-      <div class="dataGraphTraffic">
-      </div>
-      <div class="dataGraphHourly">
-      </div>
-      <div class="dataGraphDaily">
-      </div>
-      <div class="dataGraphMonthly">
-      </div>
   </div>
-
-
 
   <div class="bgimg-3"></div>
 
@@ -63,13 +54,13 @@
   </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-    <!-- <script src="vendor/scripts/d3.js"></script> -->
+    <script src="vendor/scripts/d3.js"></script>
     <script src="vendor/scripts/page.js"></script>
     <script src="vendor/scripts/handlebars.js"></script>
     <script src="vendor/scripts/moment.js"></script>
-    <script src="scripts/view/d3graphs.js"></script>
     <script src="/scripts/model/data.js"></script>
     <script src="/scripts/view/dataView.js"></script>
+    <script src="scripts/view/d3graphs.js"></script>
     <script src="scripts/controller/dataController.js"></script>
     <script src="scripts/controller/routes.js"></script>
   </body>
