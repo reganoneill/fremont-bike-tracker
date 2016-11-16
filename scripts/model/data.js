@@ -31,8 +31,9 @@
 //
   traffic.initialValues = function(){
     var obj = {};
+    // 2013-01-01T00:00.000
     var add = '?$where=date>=%272013-01-01T00:00.000%27';
-    var limit = '&$limit=100';
+    var limit = '&$limit=4000';
     var order = '&$order=date';
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
@@ -58,6 +59,8 @@
         localStorage.setItem('lastUpdated', lastUpdated);
         localStorage.setItem('initialObj', JSON.stringify(obj));
         traffic.initialObj = obj;
+
+
       }
     });
     return obj;
@@ -65,7 +68,7 @@
 
   traffic.getInitial = function() {
     var initialObj = {};
-    var limit = '?$limit=200';
+    var limit = '?$limit=1';
     if(localStorage.initialObj){
       $.ajax({
         url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + limit,

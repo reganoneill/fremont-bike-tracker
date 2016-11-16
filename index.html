@@ -8,7 +8,6 @@
   <link rel="icon" href="imgs/bike.ico" type="image/x-icon">
   <script id="traffic-template" type="text/x-handlebars-template">
     <li>
-
       <p>Date: {{date}}</p>
       <p>Northbound Traffic: {{fremont_bridge_nb}}</p>
       <p>Southbound Traffic: {{fremont_bridge_sb}}</p>
@@ -27,6 +26,7 @@
   <div class="aboutUS">
       <h3>About</h3>
       <p>Fremont Patroller is here to bring you daily estimates of bike traffic that are going on at the Fremont Bridge. You will be able to check the bike traffic for each day from the past three years so that you will be able to estimate on what day leave your location to go bike riding and not get stuck in traffic. Our organization is using seattle.gov API to calculate the amount of bikers crossing Fremont Bridge thought the past three years of the API being available for the public access.</p>
+      <div class="initial-locStorage-vals"></div>
   </div>
 
   <div class="bgimg-2"></div>
@@ -44,7 +44,17 @@
       </select>
       <button id="submit-dates">Submit</button>
       <section id="stats"></section>
+      <div class="dataGraphTraffic">
+      </div>
+      <div class="dataGraphHourly">
+      </div>
+      <div class="dataGraphDaily">
+      </div>
+      <div class="dataGraphMonthly">
+      </div>
   </div>
+
+
 
   <div class="bgimg-3"></div>
 
@@ -52,15 +62,16 @@
       <h3>Fremont Bridge History</h3>
       <p>The Fremont Bridge is a double-leaf bascule bridge that spans the Fremont Cut in Seattle, Washington. The bridge, which connects Fremont Avenue North and 4th Avenue North, connects the neighborhoods of Fremont and Queen Anne. The Fremont Bridge was opened on Friday June 15, 1917, at a cost of $410,000. The bridge was added to the National Register of Historic Places in 1982, and is also a designated city landmark. Due to its low vessel clearance of 30 feet, the Fremont Bridge opens an average of 35 times a day, which makes it the most frequently opened drawbridge in the United States and one of the busiest bascule bridges in the world.</p>
   </div>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="vendor/scripts/d3.js"></script>
     <script src="vendor/scripts/page.js"></script>
     <script src="vendor/scripts/handlebars.js"></script>
     <script src="vendor/scripts/moment.js"></script>
+    <script src="scripts/view/d3graphs.js"></script>
     <script src="/scripts/model/data.js"></script>
     <script src="/scripts/view/dataView.js"></script>
-    <script src="scripts/view/d3graphs.js"></script>
     <script src="scripts/controller/dataController.js"></script>
     <script src="scripts/controller/routes.js"></script>
   </body>
