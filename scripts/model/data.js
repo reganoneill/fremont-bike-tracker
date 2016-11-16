@@ -61,7 +61,6 @@
       }
     });
     return obj;
-
   };
 
   traffic.getInitial = function() {
@@ -115,29 +114,6 @@
 
 
 
-  traffic.getHour = function(dateTime){
-    return parseInt(moment(dateTime).format('H'));
-  };
-
-  function Results(nod, tot, avg, pNb, pSb, p, hA, hN, hS, avgA, avgN, avgS, dA, mA, yA){
-    this.numberOfDays = nod,
-    this.total = tot,
-    this.average = avg,
-    this.peakNB = pNb,
-    this.peakSB = pSb,
-    this.peak = p,
-    this.hourlyArrayAll = hA,
-    this.hourlyArrayNb = hN,
-    this.hourlyArraySb = hS,
-    this.hourlyAvgAll = avgA,
-    this.hourlyAvgNb = avgN,
-    this.hourlyAvgSb = avgS;
-    this.dailyArray = dA;
-    this.monthlyArray = mA;
-    this.yearlyArray = yA;
-  };
-  traffic.allResults = [];
-
 
   function DateType(date){
     this.fremont_bridge_nb = 0,
@@ -152,49 +128,6 @@
     }
   };
 
-  traffic.dailyAverages = function(data){
-    console.log(data);
-    var dayByName = Array(7).fill(0);
-    var dayCount = Array(7).fill(0);
-    data.forEach(function(cur){
-      var dayName = cur.date.slice(11,14);
-      switch (dayName) {
-      case 'Sun':
-        dayByName[0] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
-        dayCount[0]++;
-        break;
-      case 'Mon':
-        dayByName[1] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
-        dayCount[1]++;
-        break;
-      case 'Tue':
-        dayByName[2] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
-        dayCount[2]++;
-        break;
-      case 'Wed':
-        dayByName[3] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
-        dayCount[3]++;
-        break;
-      case 'Thu':
-        dayByName[4] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
-        dayCount[4]++;
-        break;
-      case 'Fri':
-        dayByName[5] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
-        dayCount[5]++;
-        break;
-      case 'Sat':
-        dayByName[6] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
-        dayCount[6]++;
-        break;
-      default:
-      }
-    });
-    dayByName.forEach(function(data, idx){
-      dayByName[idx] = (dayByName[idx] / dayCount[idx]);
-    });
-    return dayByName;
-  };
 
 
   traffic.calcNumbers = function(){
@@ -219,6 +152,7 @@
       var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY:ddd');
       var month = moment(traffic.allTraffic[idx].date).format('MM-YYYY');
       var year = moment(traffic.allTraffic[idx].date).format('YYYY');
+
       var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
       var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
 
@@ -228,8 +162,8 @@
 
       traffic.hourlyArrayAll.forEach(function(data, idx){
         traffic.hourlyAvgAll[idx] = (traffic.hourlyArrayAll[idx] / traffic.numberOfDays).toFixed(2);
-        traffic.hourlyAvgNb[idx] = traffic.hourlyArrayNb[idx] / traffic.numberOfDays.toFixed(2);
-        traffic.hourlyAvgSb[idx] = traffic.hourlyArraySb[idx] / traffic.numberOfDays.toFixed(2);
+        traffic.hourlyAvgNb[idx] = (traffic.hourlyArrayNb[idx] / traffic.numberOfDays).toFixed(2);
+        traffic.hourlyAvgSb[idx] = (traffic.hourlyArraySb[idx] / traffic.numberOfDays).toFixed(2);
       });
 
 //adding up all values of nb and sb in date range
@@ -290,12 +224,170 @@
     traffic.dailyArray.push(workingDay);
     traffic.monthlyArray.push(workingMonth);
     traffic.yearlyArray.push(workingYear);
-    traffic.allResults.push(new Results(traffic.numberOfDays, total, avg, peakNB,
-       peakSB, peak, traffic.hourlyArrayAll ,traffic.hourlyArrayNb, traffic.hourlyArraySb,
-        traffic.hourlyAvgAll, traffic.hourlyAvgNb, traffic.hourlyAvgSb, traffic.dailyArray,
-         traffic.monthlyArray, traffic.yearlyArray));
+    traffic.monthlyAverageData(traffic.monthlyAverages(traffic.monthlyArray));
+    traffic.dailyAverageData(traffic.dailyAverages(traffic.dailyArray));
+    traffic.hourlyAverageData(traffic.hourlyAvgAll, traffic.hourlyAvgNb, traffic.hourlyAvgSb);
+    traffic.generalDataToDisplay.push(new GeneralDataObj(traffic.numberOfDays, total, avg, peakNB,
+       peakSB, peak));
+  };
+/////////////////////////////General Data//////////////////////////////////////
+  traffic.generalDataToDisplay = [];
+  function GeneralDataObj(nod, tot, avg, pNb, pSb, p){
+    this.numberOfDays = nod,
+    this.total = tot,
+    this.average = avg,
+    this.peakNB = pNb,
+    this.peakSB = pSb,
+    this.peak = p;
   };
 
+/////////////////////////////Hourly Data Average//////////////////////////////////
+  traffic.hourlyDataToDisplay = [];
+  function HourlyDataObj(data){
+    this.hour = data.hour;
+    this.avg = data.avg;
+    this.avgNb = data.avgNb;
+    this.avgSb = data.avgSb;
+  }
+  traffic.hourlyAverageData = function(data, data2, data3){
+    var hoursOfDay = ['12AM','1AM','2AM','3AM','4AM','5AM','6AM','7AM','8AM','9AM','10AM','11AM',
+    '12PM','1PM','2PM','3PM','4PM','5PM','6PM','7PM','8PM','9PM','10PM','11PM'];
+    var dataObj = {};
+    data.forEach(function(eachHour, idx){
+      dataObj.hour = hoursOfDay[idx];
+      dataObj.avg = eachHour;
+      dataObj.avgNb = data2[idx];
+      dataObj.avgSb = data3[idx];
+      traffic.hourlyDataToDisplay.push(new HourlyDataObj(dataObj));
+    });
+  };
+//////////////////////////Days of the Week Averages////////////////////////////////
+  traffic.getHour = function(dateTime){
+    return parseInt(moment(dateTime).format('H'));
+  };
+  traffic.dailyAverages = function(data){
+    var dayByName = Array(7).fill(0);
+    var dayByNameNb = Array(7).fill(0);
+    var dayByNameSb = Array(7).fill(0);
+    var dayCount = Array(7).fill(0);
+    data.forEach(function(cur){
+      var dayName = cur.date.slice(11,14);
+      switch (dayName) {
+      case 'Sun':
+        dayByName[0] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayByNameNb[0] += parseInt(cur.fremont_bridge_nb);
+        dayByNameSb[0] += parseInt(cur.fremont_bridge_sb);
+        dayCount[0]++;
+        break;
+      case 'Mon':
+        dayByName[1] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayByNameNb[1] += parseInt(cur.fremont_bridge_nb);
+        dayByNameSb[1] += parseInt(cur.fremont_bridge_sb);
+        dayCount[1]++;
+        break;
+      case 'Tue':
+        dayByName[2] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayByNameNb[2] += parseInt(cur.fremont_bridge_nb);
+        dayByNameSb[2] += parseInt(cur.fremont_bridge_sb);
+        dayCount[2]++;
+        break;
+      case 'Wed':
+        dayByName[3] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayByNameNb[3] += parseInt(cur.fremont_bridge_nb);
+        dayByNameSb[3] += parseInt(cur.fremont_bridge_sb);
+        dayCount[3]++;
+        break;
+      case 'Thu':
+        dayByName[4] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayByNameNb[4] += parseInt(cur.fremont_bridge_nb);
+        dayByNameSb[4] += parseInt(cur.fremont_bridge_sb);
+        dayCount[4]++;
+        break;
+      case 'Fri':
+        dayByName[5] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayByNameNb[5] += parseInt(cur.fremont_bridge_nb);
+        dayByNameSb[5] += parseInt(cur.fremont_bridge_sb);
+        dayCount[5]++;
+        break;
+      case 'Sat':
+        dayByName[6] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayByNameNb[6] += parseInt(cur.fremont_bridge_nb);
+        dayByNameSb[6] += parseInt(cur.fremont_bridge_sb);
+        dayCount[6]++;
+        break;
+      default:
+      }
+    });
+    dayByName.forEach(function(data, idx){
+      dayByName[idx] = (dayByName[idx] / dayCount[idx]);
+      dayByNameNb[idx] = (dayByNameNb[idx] / dayCount[idx]);
+      dayByNameSb[idx] = (dayByNameSb[idx] / dayCount[idx]);
+    });
+    var allArray = [dayByName, dayByNameNb, dayByNameSb];
+    return allArray;
+  };
+
+  function AvgDataObj(data){
+    this.day = data.day,
+    this.avg = data.avg;
+    this.avgNb = data.avgNb;
+    this.avgSb = data.avgSb;
+  };
+
+  traffic.dailyAverageData = function(data){
+    traffic.dailyDataToDisplay = [];
+    var daysOfWeek = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var dataObj = {};
+    data[0].forEach(function(eachDay, idx){
+      dataObj.day = daysOfWeek[idx];
+      dataObj.avg = eachDay;
+      dataObj.avgNb = data[1][idx];
+      dataObj.avgSb = data[2][idx];
+      traffic.dailyDataToDisplay.push(new AvgDataObj(dataObj));
+    });
+  };
+//////////////////////////////////////////////////////////////////////////////////
+
+  traffic.monthlyAverages = function(data){
+    var months = Array(12).fill(0);
+    var monthsNb = Array(12).fill(0);
+    var monthsSb = Array(12).fill(0);
+    var monthCount = Array(12).fill(0);
+    data.forEach(function(eachMonth){
+      var monthByNum = (parseInt(eachMonth.date.slice(0,2) - 1));
+      months[monthByNum] += (parseInt(eachMonth.fremont_bridge_sb) + parseInt(eachMonth.fremont_bridge_nb));
+      monthsNb[monthByNum] += parseInt(eachMonth.fremont_bridge_nb);
+      monthsSb[monthByNum] += parseInt(eachMonth.fremont_bridge_sb);
+      monthCount[monthByNum]++;
+    });
+    months.forEach(function(data, idx){
+      months[idx] = (months[idx] / monthCount[idx]);
+    });
+    var allArray = [months, monthsNb, monthsSb];
+    return allArray;
+  };
+
+  function AvgMonthlyObj(data){
+    this.month = data.month;
+    this.avg = data.avg;
+    this.avgNb = data.avgNb;
+    this.avgSb = data.avgSb;
+  }
+
+  traffic.monthlyAverageData = function(data){
+    traffic.monthlyDataToDisplay = [];
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var dataObj = {};
+    data[0].forEach(function(eachMonth, idx){
+      dataObj.month = months[idx];
+      dataObj.avg = eachMonth;
+      dataObj.avgNb = data[1][idx];
+      dataObj.avgSb = data[2][idx];
+      traffic.monthlyDataToDisplay.push(new AvgMonthlyObj(dataObj));
+    });
+  };
+
+///////////////////////////////////////////////////////////////////////////////////
   traffic.initialObj = traffic.getInitial();
 
   module.traffic = traffic;

@@ -25,8 +25,32 @@
   background-color: #282E34;
   text-align:center;
   padding: 50px 80px;
-  text-align: justify;
+  text-align: center;
 }
+
+.dataTitle{
+  margin-bottom: 20px
+}
+
+.celectors{
+    border-style: none;
+}
+
+#submit-dates{
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 3px 12px;
+    text-align: center;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#submit-dates:hover {
+    background-color: #c29970;
+    color: white;
+  }
 
 .bridgeHistory{
   position: relative;
@@ -55,16 +79,16 @@ body, html {
 }
 
 .bgimg-1 {
-  background-image: url("imgs/FremontBridgeOpen.jpg");
+  background-image: url("../imgs/FremontBridgeOpen.jpg");
   min-height: 600px;
 }
 
 .bgimg-2 {
-  background-image: url("imgs/FremontBridgeClosed.jpg");
+  background-image: url("../imgs/FremontBridgeClosed.jpg");
   min-height: 600px;
 }
 .bgimg-3 {
-  background-image: url("imgs/FremontBridgeWall.jpg");
+  background-image: url("../imgs/FremontBridgeWall.jpg");
   min-height: 600px;
 }
 
@@ -99,4 +123,20 @@ h3 {
 .bar {
   fill: #c29970;
   box-shadow:10px 10px;
+}
+
+.axisWhite line{
+  stroke: white;
+}
+
+.axisWhite path{
+  stroke: white;
+}
+
+.axisWhite text{
+  fill: white;
+}
+
+svg{
+  display: none;
 }
