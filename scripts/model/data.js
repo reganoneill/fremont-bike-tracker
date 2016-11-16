@@ -113,8 +113,6 @@
     };
 
 
-
-
   function DateType(date){
     this.fremont_bridge_nb = 0,
     this.fremont_bridge_sb = 0,
@@ -147,7 +145,7 @@
     var workingYear = new DateType(moment(traffic.allTraffic[0].date).format('YYYY'));
     console.log(workingDay);
     console.log(workingDay.date);
-    
+
     traffic.allTraffic.forEach(function(data, idx){
       var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY:ddd');
       var month = moment(traffic.allTraffic[idx].date).format('MM-YYYY');
