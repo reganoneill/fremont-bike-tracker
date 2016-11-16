@@ -24,6 +24,68 @@
     console.log(traffic.allTraffic);
   };
 
+  traffic.initialValues = function(){
+    var obj = {};
+    var add = '?$where=date>=%272013-01-01T00:00.000%27';
+    var limit = '&$limit=50000';
+    var order = '&$order=date';
+    $.ajax({
+      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
+      type: 'GET',
+      success: function(data, message, xhr){
+        var lastUpdated = xhr.getResponseHeader('Last-Modified');
+        traffic.loadAll(data);
+        var totalNb = 0;
+        var totalSb = 0;
+        traffic.allTraffic.forEach(function(data){
+          var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
+          var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
+          totalNb += nb;
+          totalSb += sb;
+        });
+        var totalAll = totalNb + totalSb;
+        obj = {
+          total : totalAll,
+          totalNorth : totalNb,
+          totalSouth : totalSb
+        };
+        console.log(obj);
+        localStorage.setItem('lastUpdated', lastUpdated);
+        localStorage.setItem('initialObj', JSON.stringify(obj));
+        traffic.initialObj = obj;
+      }
+    });
+    return obj;
+
+  };
+
+  traffic.getInitial = function() {
+    var initialObj = {};
+    var limit = '?$limit=1';
+    if(localStorage.initialObj){
+      $.ajax({
+        url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + limit,
+        type: 'GET',
+        success: function(data, message, xhr){
+          var lastUpdated = xhr.getResponseHeader('Last-Modified');
+          if (!localStorage.lastUpdated || lastUpdated !== localStorage.lastUpdated){
+            console.log('different');
+            traffic.initialObj = traffic.initialValues();
+            localStorage.setItem('initialObj', initialObj);
+            localStorage.setItem('lastUpdated', lastUpdated);
+          } else {
+            console.log('same');
+            traffic.initialObj = JSON.parse(localStorage.initialObj);
+          }
+        }//end success
+      });//end ajax
+    } // end if
+    else {
+      initialObj = traffic.initialValues();
+    }
+    return initialObj;
+  };
+
   traffic.requestTraffic = function(callback) {
     total = 0;
     var add;
@@ -46,13 +108,6 @@
 
   };
 
-
-  traffic.withTheAttribute = function(myAttr) {
-    return traffic.allTraffic.filter(function(aRepo) {
-      return aRepo[myAttr];
-    });
-  };
-
   traffic.getHour = function(dateTime){
     return parseInt(moment(dateTime).format('H'));
   };
@@ -71,7 +126,7 @@
     this.hourlyAvgNb = avgN,
     this.hourlyAvgSb = avgS;
     this.dailyArray = dA;
-    this.monthlyArray = mA
+    this.monthlyArray = mA;
     this.yearlyArray = yA;
   };
   traffic.allResults = [];
@@ -81,6 +136,7 @@
     this.fremont_bridge_nb = 0,
     this.fremont_bridge_sb = 0,
     this.date = date;
+    this.dayOfWeek = '';
   };
   DateType.prototype.add = function(direction, value){
     if (direction === 'nb'){
@@ -89,6 +145,51 @@
       this.fremont_bridge_sb += value;
     }
   };
+
+  traffic.dailyAverages = function(data){
+    console.log(data);
+    var dayByName = Array(7).fill(0);
+    var dayCount = Array(7).fill(0);
+    data.forEach(function(cur){
+      var dayName = cur.date.slice(11,14);
+      switch (dayName) {
+      case 'Sun':
+        dayByName[0] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayCount[0]++;
+        break;
+      case 'Mon':
+        dayByName[1] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayCount[1]++;
+        break;
+      case 'Tue':
+        dayByName[2] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayCount[2]++;
+        break;
+      case 'Wed':
+        dayByName[3] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayCount[3]++;
+        break;
+      case 'Thu':
+        dayByName[4] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayCount[4]++;
+        break;
+      case 'Fri':
+        dayByName[5] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayCount[5]++;
+        break;
+      case 'Sat':
+        dayByName[6] += (parseInt(cur.fremont_bridge_sb) + parseInt(cur.fremont_bridge_nb));
+        dayCount[6]++;
+        break;
+      default:
+      }
+    });
+    dayByName.forEach(function(data, idx){
+      dayByName[idx] = (dayByName[idx] / dayCount[idx]);
+    });
+    return dayByName;
+  };
+
 
   traffic.calcNumbers = function(){
     traffic.numberOfDays = (traffic.allTraffic.length / 24);
@@ -102,12 +203,12 @@
     traffic.monthlyArray = [];
     traffic.yearlyArray = [];
 
-    var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('DD-MM-YYYY'));
+    var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('DD-MM-YYYY:ddd'));
     var workingMonth = new DateType(moment(traffic.allTraffic[0].date).format('MM-YYYY'));
     var workingYear = new DateType(moment(traffic.allTraffic[0].date).format('YYYY'));
 
     traffic.allTraffic.forEach(function(data, idx){
-      var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY');
+      var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY:ddd');
       var month = moment(traffic.allTraffic[idx].date).format('MM-YYYY');
       var year = moment(traffic.allTraffic[idx].date).format('YYYY');
       var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
@@ -185,9 +286,7 @@
          traffic.monthlyArray, traffic.yearlyArray));
   };
 
-
-  //var date = moment(traffic.allTraffic[0].date).format('h-DD-MM-YYYY');
-
+  traffic.initialObj = traffic.getInitial();
 
   module.traffic = traffic;
 })(window);
