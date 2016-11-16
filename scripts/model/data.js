@@ -218,6 +218,7 @@
     traffic.hourlyAverageData(traffic.hourlyAvgAll, traffic.hourlyAvgNb, traffic.hourlyAvgSb);
     traffic.generalDataToDisplay.push(new GeneralDataObj(traffic.numberOfDays, total, avg, peakNB,
        peakSB, peak));
+    charts.drawCharts();
   };
 /////////////////////////////General Data//////////////////////////////////////
   traffic.generalDataToDisplay = [];
