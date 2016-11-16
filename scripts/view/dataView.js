@@ -8,15 +8,12 @@
     e.preventDefault();
 
     if ($('input#from').val() === ''){
-      console.log('here');
       traffic.limitDates = false;
     }
     else {
       traffic.limitDates = true;
     }
     traffic.requestTraffic(traffic.calcNumbers);
-  });
-
 
   traffic.datePick = function(){
     var dateFormat = 'mm/dd/yy',
