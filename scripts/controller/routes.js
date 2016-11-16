@@ -1,7 +1,7 @@
 'use strict';
-page('/', home);
-page('/about', about);
-page('/stats', stats);
+//page('/', home);
+//page('/about', about);
+//page('/stats', stats);
 
 function stats(){
   dataController.reveal();

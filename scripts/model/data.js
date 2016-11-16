@@ -15,6 +15,8 @@
     }, this);
   };
 
+//inputData is the data from the API. This function sorts it, assigns each Object
+//to a Traffic object, and puts them all in an array called traffic.allTraffic.
   traffic.loadAll = function(inputData) {
     traffic.allTraffic = inputData.sort(function(a,b) {
       return (new Date(b.date)) - (new Date(a.date));
@@ -22,13 +24,15 @@
       return new Traffic(ele);
     });
     console.log(traffic.allTraffic);
-
   };
 
+
+//this function makes an ajax call to the API - specifically to our starting dat (jan 01 2013)
+//
   traffic.initialValues = function(){
     var obj = {};
     var add = '?$where=date>=%272013-01-01T00:00.000%27';
-    var limit = '&$limit=50000';
+    var limit = '&$limit=10';
     var order = '&$order=date';
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
@@ -102,14 +106,14 @@
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + order,
       type: 'GET',
-
+      success: function(data){
         traffic.loadAll(data);
         callback();
         }
-      }
-    });
+      });
+    };
 
-  };
+
 
   traffic.getHour = function(dateTime){
     return parseInt(moment(dateTime).format('H'));
@@ -139,7 +143,6 @@
     this.fremont_bridge_nb = 0,
     this.fremont_bridge_sb = 0,
     this.date = date;
-    this.dayOfWeek = '';
   };
   DateType.prototype.add = function(direction, value){
     if (direction === 'nb'){
@@ -209,7 +212,9 @@
     var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('DD-MM-YYYY:ddd'));
     var workingMonth = new DateType(moment(traffic.allTraffic[0].date).format('MM-YYYY'));
     var workingYear = new DateType(moment(traffic.allTraffic[0].date).format('YYYY'));
-
+    console.log(workingDay);
+    console.log(workingDay.date);
+    
     traffic.allTraffic.forEach(function(data, idx){
       var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY:ddd');
       var month = moment(traffic.allTraffic[idx].date).format('MM-YYYY');
@@ -227,6 +232,7 @@
         traffic.hourlyAvgSb[idx] = traffic.hourlyArraySb[idx] / traffic.numberOfDays.toFixed(2);
       });
 
+//adding up all values of nb and sb in date range
       if (date === workingDay.date){
         workingDay.add('nb', nb);
         workingDay.add('sb', sb);

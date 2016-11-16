@@ -6,7 +6,6 @@
 
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
-
     if ($('input#from').val() === ''){
       traffic.limitDates = false;
     }
@@ -14,6 +13,8 @@
       traffic.limitDates = true;
     }
     traffic.requestTraffic(traffic.calcNumbers);
+
+  });
 
   traffic.datePick = function(){
     var dateFormat = 'mm/dd/yy',
@@ -26,6 +27,7 @@
         })
         .on( 'change', function() {
           traffic.date1 = getDate(this);
+          console.log(traffic.date1);
           to.datepicker( 'option', 'minDate', getDate( this ) );
         }),
       to = $( '#to' ).datepicker({
@@ -42,7 +44,15 @@
       var date;
       try {
         date = $.datepicker.parseDate( dateFormat, element.value );
-
+        // console.log(date);
+        // console.log(element.value);
+        // console.log(date.getDate());
+        // console.log(date.getMonth());
+        // console.log(date.getFullYear());
+        // var day= date.getDate();
+        // var month = date.getMonth();
+        // var year = date.getFullYear();
+        // $('.first-date').append(day + ' ' + month + ' ' + year);
       } catch( error ) {
         date = null;
       }
@@ -50,7 +60,11 @@
       return date;
     }
 
+    // var calTo = $('input#to').val();
+    // console.log(calFrom);
+    // console.log(calTo);
   };
+// end date range picker from jqueryui.com
 
 
   traffic.datePick();
@@ -58,4 +72,4 @@
 
 
   module.trafficView = trafficView;
-})(window);
+})(window)
