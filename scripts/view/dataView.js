@@ -7,25 +7,15 @@
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
     if ($('input#from').val() === ''){
-      console.log('here');
       traffic.limitDates = false;
     }
     else {
       traffic.limitDates = true;
     }
-    traffic.requestTraffic(trafficView.renderTraffic);
+    traffic.requestTraffic(traffic.calcNumbers);
 
   });
 
-
-  trafficView.renderTraffic = function() {
-    traffic.calcNumbers();
-    $('#stats').empty().append(
-      traffic.allTraffic
-      .map(trafficCompiler)
-    );
-  };
-  // taken from : https://jqueryui.com/datepicker/#date-range
   traffic.datePick = function(){
     var dateFormat = 'mm/dd/yy',
       // var dateFormat = 'yy/mm/dd',
