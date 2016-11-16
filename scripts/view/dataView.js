@@ -14,19 +14,10 @@
     else {
       traffic.limitDates = true;
     }
-    traffic.requestTraffic(trafficView.renderTraffic);
-
+    traffic.requestTraffic(traffic.calcNumbers);
   });
 
 
-  trafficView.renderTraffic = function() {
-    traffic.calcNumbers();
-    $('#stats').empty().append(
-      traffic.allTraffic
-      .map(trafficCompiler)
-    );
-  };
-  // taken from : https://jqueryui.com/datepicker/#date-range
   traffic.datePick = function(){
     var dateFormat = 'mm/dd/yy',
       // var dateFormat = 'yy/mm/dd',
@@ -55,13 +46,6 @@
       try {
         date = $.datepicker.parseDate( dateFormat, element.value );
 
-        // console.log(date.getDate());
-        // console.log(date.getMonth());
-        // console.log(date.getFullYear());
-        // var day= date.getDate();
-        // var month = date.getMonth();
-        // var year = date.getFullYear();
-        // $('.first-date').append(day + ' ' + month + ' ' + year);
       } catch( error ) {
         date = null;
       }
@@ -70,7 +54,6 @@
     }
 
   };
-// end date range picker from jqueryui.com
 
 
   traffic.datePick();

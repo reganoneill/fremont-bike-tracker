@@ -26,6 +26,110 @@
     console.log(traffic.allTraffic);
     console.log('after turning each into a Traffic object');
   };
+
+
+// traffic.allResults || localStorage.allBikeResults; This is the object we'll be referrencing to load visuals on initial view. It holds information about the most recent bridge info.
+$.ajax({
+  type: 'HEAD',
+  url: 'https://data.seattle.gov/resource/4xy5-26gy.json',
+  success: function(data, message, xhr){
+
+  }
+})
+  if(!localStorage.lastModifiedBikeBridge || xhr.getAllResponseHeaders('Last-Modified') !== localStorage.lastModifiedBikeBridge){
+  } else {
+      localStorage.allBikeResults
+      traffic.allResults;
+      localStorage.allLoaded = JSON.stringify(data);
+    }
+
+
+    traffic.requestInitialData = function(callback) {
+      total = 0;
+      var add;
+      if (traffic.limitDates){
+        add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
+        + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+      } else {
+        add = '?$where=date>=%272013-01-01T00:00.000%27';
+      }
+      var limit = '&$limit=50000';
+      var order = '&$order=date';
+      $.ajax({
+        url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + order,
+        type: 'GET',
+        success: function(data, message, xhr){
+          traffic.loadAll(data);
+          callback();
+          }
+        }
+      });
+
+
+    Article.fetchAll = function(next) {
+        if (localStorage.hackerIpsum) {
+          $.ajax({
+            type: 'HEAD',
+            url: '/data/hackerIpsum.json',
+            success: function(data, message, xhr) {
+              var eTag = xhr.getResponseHeader('eTag');
+              if (!localStorage.eTag || eTag !== localStorage.eTag) {
+                // pass 'next' into Article.getAll();
+                Article.getAll(next);
+              } else {
+                Article.loadAll(JSON.parse(localStorage.hackerIpsum));
+                next();
+              }
+            }
+          });
+        } else {
+          Article.getAll(next);
+        }
+      };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // traffic.getAll = function(){
+  //   $.ajax({
+  //       url: 'https://data.seattle.gov/resource/4xy5-26gy.json',
+  //       type: 'HEAD',
+  //       success: function(data, message, xhr) {
+  //        localStorage.lastModified = (xhr.getAllResponseHeaders('Last-Modified'));
+  //         }
+  //     });
+  // }
   //
   // ?$where=date%3E=%272016-10-10T00:00.000%27%20AND%20date%3C=%272016-10-11T00:00.000%27
 
@@ -44,20 +148,12 @@
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + order,
       type: 'GET',
-      success: function(data){
-        console.log(data);
+      success: function(data, message, xhr){
         traffic.loadAll(data);
         callback();
+        }
       }
     });
-  };
-
-
-  traffic.withTheAttribute = function(myAttr) {
-    return traffic.allTraffic.filter(function(aRepo) {
-      return aRepo[myAttr];
-    });
-  };
 
   traffic.getHour = function(dateTime){
     return parseInt(moment(dateTime).format('H'));
@@ -119,11 +215,7 @@
     console.log(peakNB, ' is peakNB');
     console.log(peakSB, ' is peakSB');
     console.log(peak, 'is overall Peak');
-  };
-
-
-  //var date = moment(traffic.allTraffic[0].date).format('h-DD-MM-YYYY');
-
-
+};
+//var date = moment(traffic.allTraffic[0].date).format('h-DD-MM-YYYY');
   module.traffic = traffic;
 })(window);
