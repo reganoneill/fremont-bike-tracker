@@ -27,6 +27,7 @@
         })
         .on( 'change', function() {
           traffic.date1 = getDate(this);
+          console.log(traffic.date1);
           to.datepicker( 'option', 'minDate', getDate( this ) );
         }),
       to = $( '#to' ).datepicker({
@@ -68,7 +69,64 @@
 
   traffic.datePick();
 
+  //write functionality here which can take the three object properties
+  //from localStorage's initialObj object and display them in the 'about'
+  //section of the home page
 
+  //var upToDate = (moment(localStorage.lastUpdated).format('YYYY');
+  // var add = '?$where=date>=%272013-01-01T00:00.000%27';
+  // var limit = '&$limit=4000';
+  // var order = '&$order=date';
+
+  // var toDate1 = function(){
+  //   var upToDate = new Date();
+  //   console.log(upToDate.getFullYear());
+  //   console.log(upToDate.getMonth());
+  //   // console.log(upToDate);
+  //   upToDate = (moment(upToDate).format('YYYY'));
+  //   console.log(upToDate);
+  // };
+  // toDate1();
+
+  traffic.loadImmediately = function(){
+    // var obj = {};
+    // var add = '?$where=date>=%272013-01-01T00:00.000%27';
+    // var limit = '&$limit=4000';
+    // var order = '&$order=date';
+    var obj = {};
+    var upToDate = new Date();
+    var upToDateYear = upToDate.getFullYear();
+    var upToDateMonth = upToDate.getMonth();
+    var addToQueryString = '?$where=date>=%27' + upToDateYear + '-' + upToDateMonth + '-01T00:00.000%27';
+    $.ajax({
+      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + addToQueryString,
+      type: 'GET',
+      success: function(data, message, xhr){
+        traffic.loadAll(data);
+        var totalNb = 0;
+        var totalSb = 0;
+        traffic.allTraffic.forEach(function(data){
+          var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
+          var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
+          totalNb += nb;
+          totalSb += sb;
+        });
+        var totaltotalCurrentBikers = totalNb + totalSb;
+        obj = {
+          total : totaltotalCurrentBikers,
+          totalNorth : totalNb,
+          totalSouth : totalSb
+        };
+        localStorage.setItem('recentStats', JSON.stringify(obj));
+      }
+    });
+    //now write functionality to make last month's date (gathered above) display in
+    //the DOM.
+    var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
+    console.log(displayFirstLoadVals.total);
+    $('.initial-locStorage-vals').append('Total bike crossings from the previous month: ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
+  };
+  traffic.loadImmediately();
 
   module.trafficView = trafficView;
-})(window);
+})(window)

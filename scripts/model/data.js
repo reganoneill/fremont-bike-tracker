@@ -15,6 +15,8 @@
     }, this);
   };
 
+//inputData is the data from the API. This function sorts it, assigns each Object
+//to a Traffic object, and puts them all in an array called traffic.allTraffic.
   traffic.loadAll = function(inputData) {
     traffic.allTraffic = inputData.sort(function(a,b) {
       return (new Date(b.date)) - (new Date(a.date));
@@ -24,10 +26,14 @@
     console.log(traffic.allTraffic);
   };
 
+
+//this function makes an ajax call to the API - specifically to our starting dat (jan 01 2013)
+//
   traffic.initialValues = function(){
     var obj = {};
+    // 2013-01-01T00:00.000
     var add = '?$where=date>=%272013-01-01T00:00.000%27';
-    var limit = '&$limit=50000';
+    var limit = '&$limit=4000';
     var order = '&$order=date';
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
@@ -53,6 +59,8 @@
         localStorage.setItem('lastUpdated', lastUpdated);
         localStorage.setItem('initialObj', JSON.stringify(obj));
         traffic.initialObj = obj;
+
+
       }
     });
     return obj;
@@ -87,6 +95,7 @@
 
   traffic.requestTraffic = function(callback) {
     total = 0;
+
     var add;
     if (traffic.limitDates){
       add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
@@ -97,15 +106,14 @@
     var limit = '&$limit=50000';
     var order = '&$order=date';
     $.ajax({
-      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
+      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + order,
       type: 'GET',
       success: function(data){
         traffic.loadAll(data);
         callback();
-      }
-    });
-
-  };
+        }
+      });
+    };
 
 
   function DateType(date){
@@ -138,6 +146,8 @@
     var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('DD-MM-YYYY:ddd'));
     var workingMonth = new DateType(moment(traffic.allTraffic[0].date).format('MM-YYYY'));
     var workingYear = new DateType(moment(traffic.allTraffic[0].date).format('YYYY'));
+    console.log(workingDay);
+    console.log(workingDay.date);
 
     traffic.allTraffic.forEach(function(data, idx){
       var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY:ddd');
@@ -157,6 +167,7 @@
         traffic.hourlyAvgSb[idx] = (traffic.hourlyArraySb[idx] / traffic.numberOfDays).toFixed(2);
       });
 
+//adding up all values of nb and sb in date range
       if (date === workingDay.date){
         workingDay.add('nb', nb);
         workingDay.add('sb', sb);
@@ -210,6 +221,7 @@
       total += hourlyTotal;
       avg = (total / (idx + 1)).toFixed(2);
     });
+
     traffic.dailyArray.push(workingDay);
     traffic.monthlyArray.push(workingMonth);
     traffic.yearlyArray.push(workingYear);
