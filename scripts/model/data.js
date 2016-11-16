@@ -32,7 +32,7 @@
   traffic.initialValues = function(){
     var obj = {};
     var add = '?$where=date>=%272013-01-01T00:00.000%27';
-    var limit = '&$limit=10';
+    var limit = '&$limit=100';
     var order = '&$order=date';
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
@@ -65,7 +65,7 @@
 
   traffic.getInitial = function() {
     var initialObj = {};
-    var limit = '?$limit=1';
+    var limit = '?$limit=200';
     if(localStorage.initialObj){
       $.ajax({
         url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + limit,
