@@ -83,7 +83,6 @@
             localStorage.setItem('initialObj', initialObj);
             localStorage.setItem('lastUpdated', lastUpdated);
           } else {
-            console.log('same');
             traffic.initialObj = JSON.parse(localStorage.initialObj);
           }
         }//end success
@@ -121,14 +120,14 @@
     var limit = '&$limit=50000';
     var order = '&$order=date';
     $.ajax({
-      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + order,
+      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
       type: 'GET',
       success: function(data){
         traffic.loadAll(data);
         callback();
-        }
-      });
-    };
+      }
+    });
+  };
 
 
   function DateType(date){
@@ -164,8 +163,6 @@
     var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('MM-DD-YYYY:ddd'));
     var workingMonth = new DateType(moment(traffic.allTraffic[0].date).format('MM-YYYY'));
     var workingYear = new DateType(moment(traffic.allTraffic[0].date).format('YYYY'));
-    console.log(workingDay);
-    console.log(workingDay.date);
 
     traffic.allTraffic.forEach(function(data, idx){
       var date = moment(traffic.allTraffic[idx].date).format('MM-DD-YYYY:ddd');
