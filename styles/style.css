@@ -1,5 +1,6 @@
 *{
   margin: 0;
+  text-decoration: none;
 }
 
 .topTitle{
@@ -158,8 +159,8 @@ h3 {
 div.tooltip {
   position: absolute;
   text-align: center;
-  width: 60px;
-  height: 28px;
+  width: 100px;
+  height: auto;
   padding: 2px;
   font: 12px sans-serif;
   background: lightsteelblue;
@@ -171,16 +172,6 @@ div.tooltip {
 .mouseover-color {
   fill: #0072ab;
 }
-
-
-/*.dataGraph .allGraphInfo svg {
-  width: 100%;
-  display: block;
-  overflow: auto;
-}*/
-
-
-
 
 /*
 

@@ -1,0 +1,167 @@
+*{
+  margin: 0;
+  text-decoration: none;
+}
+
+.aboutUsTitle{
+  color: #ddd;
+  background-color: #282E34;
+  text-align: center;
+  padding: 50px 80px;
+  text-align: justify;
+}
+/*Marc Information*/
+.marcClass{
+  position: relative;
+  color: #ddd;
+  background-color: #282E34;
+  text-align: center;
+  padding: 50px 80px;
+  text-align: justify;
+}
+
+.gitPicMarc{
+  width:190px;
+  height:100px;
+  margin-top: 5px;
+  margin-left: 475px;
+}
+
+.linkPicMarc  {
+  width:50px;
+  height:50px;
+  margin-bottom: 25px;
+}
+
+/*Regan Information*/
+.reganClass{
+  position: relative;
+  color: #ddd;
+  background-color: #282E34;
+  text-align: center;
+  padding: 50px 80px;
+  text-align: justify;
+}
+
+.gitPicRegan{
+  width:190px;
+  height:100px;
+  margin-top: 5px;
+  margin-left: 480px;
+}
+
+.linkPicRegan{
+  width:50px;
+  height:50px;
+  margin-bottom: 25px;
+}
+
+/*Erick Information*/
+.erickClass{
+  position: relative;
+  color: #ddd;
+  background-color: #282E34;
+  text-align:center;
+  padding: 50px 80px;
+  text-align: center;
+}
+.gitPicErick{
+  width:190px;
+  height:100px;
+  margin-top: 5px;
+}
+
+.linkPicErick{
+  width:50px;
+  height:50px;
+  margin-bottom: 25px;
+  margin-right: 80px;
+}
+/*Pavel Information*/
+.pavelClass{
+  position: relative;
+  color: #ddd;
+  background-color: #282E34;
+  text-align: center;
+  padding: 50px 80px;
+  text-align: justify;
+}
+
+.gitPicPavel{
+  width:190px;
+  height:100px;
+  margin-top: 5px;
+  margin-left: 480px;
+}
+
+.linkPicPavel{
+  width:50px;
+  height:50px;
+  margin-bottom: 25px;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font: 400 15px/1.8 "Lato", sans-serif;
+  color: #777;
+}
+
+.boatPic, .marcPic, .reganPic, .erickPic, .pavelPic {
+  background-color: black;
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.boatPic {
+  background-image: url("../imgs/boat.jpg");
+  min-height: 780px;
+}
+
+.marcPic {
+  background-image: url("../imgs/marc.jpg");
+  min-height: 650px;
+}
+
+.reganPic {
+  background-image: url("../imgs/regan.jpg");
+  min-height: 650px;
+}
+.erickPic {
+  background-image: url("../imgs/erick.jpg");
+  min-height: 650px;
+}
+.pavelPic {
+  background-image: url("../imgs/pavel.jpg");
+  min-height: 650px;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+.caption span.border {
+  background-color: #111;
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  letter-spacing: 10px;
+}
+
+
+h3 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font: 20px "Lato", sans-serif;
+  color: #c29970;
+  text-align: center;
+}
