@@ -1,0 +1,41 @@
+[
+  {
+    "name" : "Regan O'Neill",
+    "picture": "https://s-media-cache-ak0.pinimg.com/236x/1c/68/6d/1c686dde7b089c8dcb4fab38dd19d284.jpg",
+    "description": "da struggle is real",
+    "motto": "Awesome, vel bibendum eros sagittis.",
+    "webby": "https://regans-portfolio.herokuapp.com/",
+    "social1": "https://github.com/reganoneill",
+    "social2" :"https://www.linkedin.com/in/regan-o-neill-3ab78163"
+
+  },
+  {
+    "name" : "Erick Mock",
+    "picture": "http://www.theholyweb.com/wp-content/uploads/2016/05/461366-dogs-happy-dog.jpg",
+    "description": "",
+    "motto": "Excellentros. Ut feugiat mi a purus molestie",
+    "webby": "https://erickfmock.herokuapp.com/",
+    "social1":"https://github.com/kcirekcom",
+    "social2": "https://www.linkedin.com/in/erick-mock-83836b55?authType=NAME_SEARCH&authToken=G7Ii&locale=en_US&trk=tyah&trkInfo=clickedVertical%3Amynetwork%2CclickedEntityId%3A194980076%2CauthType%3ANAME_SEARCH%2Cidx%3A1-1-1%2CtarId%3A1479404413325%2Ctas%3Aerick"
+  },
+  {
+    "name" : "Marc Fieser",
+    "picture": "http://blog.leashrlylife.com/wp-content/uploads/2015/08/happy-dog.jpg",
+    "description": "",
+    "motto": "Coolness  Vivamus quis tempus mauris, nec semper tellus.",
+    "webby": "https://marc-fieser-portfolio.herokuapp.com/",
+    "social": [
+      "https://github.com/midfies", "https://www.linkedin.com/in/marc-fieser?authType=NAME_SEARCH&authToken=uO2j&locale=en_US&trk=tyah&trkInfo=clickedVertical%3Amynetwork%2CclickedEntityId%3A459310414%2CauthType%3ANAME_SEARCH%2Cidx%3A1-1-1%2CtarId%3A1479404399091%2Ctas%3Amarc"
+    ]
+  },
+  {
+    "name" : "Pavel Parkhomey",
+    "picture": "http://thegirlside.com/wp-content/uploads/2016/08/Golden_450x471-270x250.jpg",
+    "description": "",
+    "motto": "Nam pellentesque tempor nisl, et molestie odio scelerisque quis.",
+    "webby": "http://www.seattletimes.com/",
+    "social": [
+      "https://github.com/pavelpark", "https://www.linkedin.com/in/pavel-parkhomey-599919126?authType=NAME_SEARCH&authToken=_w-9&locale=en_US&trk=tyah&trkInfo=clickedVertical%3Amynetwork%2CclickedEntityId%3A521837829%2CauthType%3ANAME_SEARCH%2Cidx%3A1-1-1%2CtarId%3A1479404426169%2Ctas%3Apavel"
+    ]
+  }
+]

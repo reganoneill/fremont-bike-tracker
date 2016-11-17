@@ -26,7 +26,7 @@
     }).map(function(ele) {
       return new Traffic(ele);
     });
-    console.log(traffic.allTraffic);
+    // console.log(traffic.allTraffic);
   };
 
 //this function makes an ajax call to the API - specifically to our starting dat (jan 01 2013)
@@ -411,7 +411,12 @@
       dataObj.avgSb = parseInt(data[2][idx]);
       traffic.monthlyDataToDisplay.push(new AvgMonthlyObj(dataObj));
     });
+
   };
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////
   traffic.initialObj = traffic.getInitial();
