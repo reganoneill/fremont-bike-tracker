@@ -1,3 +1,3 @@
 # fremont-bike-tracker
 
-live @: https://radiant-atoll-11962.herokuapp.com/
+live @: https://fremont-bike-patroller.herokuapp.com/
