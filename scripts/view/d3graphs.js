@@ -37,7 +37,7 @@
         return d.date;
       }));
       y.domain([0, d3.max(dataTraffic, function(d) {
-        return d.fremont_bridge_nb;
+        return parseInt(d.fremont_bridge_nb);
       })]);
 
       svg.append('text')
@@ -199,7 +199,7 @@
     };
 
     charts.displayDataTrafficByDayChart = function() {
-      charts.updateSvg('.dataGraphTraffic');
+      charts.updateSvg('.dataGraphTrafficHourly');
       x.domain(dataTrafficByDay.map(function(d) {
         return d.date;
       }));
