@@ -35,7 +35,7 @@
     var obj = {};
     // 2013-01-01T00:00.000
     var add = '?$where=date>=%272013-01-01T00:00.000%27';
-    var limit = '&$limit=4000';
+    var limit = '&$limit=50000';
     var order = '&$order=date';
     $.ajax({
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
