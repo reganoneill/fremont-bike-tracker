@@ -41,7 +41,7 @@
         return d.date;
       }));
       y.domain([0, d3.max(dataTraffic, function(d) {
-        return parseInt(d.fremont_bridge_nb);
+        return parseInt(d.total);
       })]);
 
       svg.append('text')
@@ -70,10 +70,10 @@
         })
         .attr('width', x.bandwidth())
         .attr('y', function(d) {
-          return y(d.fremont_bridge_nb);
+          return y(d.total);
         })
         .attr('height', function(d) {
-          return height - y(d.fremont_bridge_nb);
+          return height - y(d.total);
         })
         .on('mouseover', function(d) {
           var rect = $(d3.event.target);
@@ -81,7 +81,7 @@
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(d.fremont_bridge_nb + ' bikers')
+          div.html(d.total + ' bikers')
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
@@ -276,7 +276,7 @@
         return d.date;
       }));
       y.domain([0, d3.max(dataTrafficByDay, function(d) {
-        return d.fremont_bridge_nb;
+        return d.total;
       })]);
 
       svg.append('text')
@@ -311,10 +311,10 @@
         })
         .attr('width', x.bandwidth())
         .attr('y', function(d) {
-          return y(d.fremont_bridge_nb);
+          return y(d.total);
         })
         .attr('height', function(d) {
-          return height - y(d.fremont_bridge_nb);
+          return height - y(d.total);
         })
         .on('mouseover', function(d) {
           var rect = $(d3.event.target);
@@ -322,7 +322,7 @@
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(d.fremont_bridge_nb + ' bikers')
+          div.html(d.total + ' bikers')
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
