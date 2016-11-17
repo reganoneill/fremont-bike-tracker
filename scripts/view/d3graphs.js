@@ -7,6 +7,8 @@
     var dataDaily = traffic.dailyDataToDisplay;
     var dataMonthly = traffic.monthlyDataToDisplay;
     var dataTrafficByDay = traffic.dailyArray;
+    dataTrafficByDay.reverse();
+    dataTraffic.reverse();
 
     var margin = {top: 120, right: 30, bottom: 120, left: 40},
       width = 800 - margin.left - margin.right,
@@ -34,7 +36,7 @@
         .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
     };
 
-///////////////////////
+///////////////////////HOURLY BIKE TRAFFIC TOTALS///////////////////////////////
     charts.displayDataTrafficChart = function() {
       charts.updateSvg('.dataGraphTraffic');
       x.domain(dataTraffic.map(function(d) {
@@ -55,7 +57,14 @@
       svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .attr('class', 'axisWhite')
-        .call(d3.axisBottom(x));
+        .attr('id', 'xAxis')
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+          .style('text-anchor', 'end')
+          .attr('dx', '-.8em')
+          .attr('dy', '.15em')
+          .attr('transform', 'rotate(-75)');
+
 
       svg.append('g')
         .attr('class', 'axisWhite')
@@ -81,7 +90,7 @@
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(d.total + ' bikers')
+          div.html(d.total + ' bikers<br> ' + moment(d.date).format('MM-DD-YYYY  ha'))
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
@@ -92,8 +101,30 @@
             .duration(500)
             .style('opacity', 0);
         });
+      var ticks = svg.selectAll('#xAxis .tick text');
+      console.log(dataTrafficByDay);
+      if (dataTraffic.length > 24 && dataTraffic.length <= 48){
+        ticks.attr('class', function(d,i){
+          if(i % 3 != 0) d3.select(this).remove();
+        });
+      }
+      if (dataTraffic.length > 48 && dataTraffic.length <= 96){
+        ticks.attr('class', function(d,i){
+          if(i % 6 != 0) d3.select(this).remove();
+        });
+      }
+      if (dataTraffic.length > 96 && dataTraffic.length <= 120){
+        ticks.attr('class', function(d,i){
+          if(i % 12 != 0) d3.select(this).remove();
+        });
+      }
+      if (dataTraffic.length > 120){
+        ticks.attr('class', function(d,i){
+          if(i % 24 != 0) d3.select(this).remove();
+        });
+      }
     };
-
+///////////////////////AVG BIKE TRAFFIC PER HOUR///////////////////////////////
     charts.displayHourlyChart = function() {
       charts.updateSvg('.dataGraphHourly');
       x.domain(dataHourly.map(function(d) {
@@ -140,7 +171,7 @@
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(d.avg + ' bikers')
+          div.html(d.avg + ' bikers<br>' + d.hour)
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
@@ -152,7 +183,7 @@
             .style('opacity', 0);
         });
     };
-
+///////////////////////AVG BIKE TRAFFIC PER DAY///////////////////////////////
     charts.displayDailyChart = function() {
       charts.updateSvg('.dataGraphDaily');
       x.domain(dataDaily.map(function(d) {
@@ -199,7 +230,7 @@
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(d.avg + ' bikers')
+          div.html(d.avg + ' bikers<br>' + d.day)
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
@@ -211,7 +242,7 @@
             .style('opacity', 0);
         });
     };
-
+///////////////////////AVG BIKE TRAFFIC PER MONTH//////////////////////////////
     charts.displayMonthlyChart = function() {
       charts.updateSvg('.dataGraphMonthly');
       x.domain(dataMonthly.map(function(d) {
@@ -257,7 +288,7 @@
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(d.avg + ' bikers')
+          div.html(d.avg + ' bikers<br>' + d.month)
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
@@ -269,7 +300,7 @@
             .style('opacity', 0);
         });
     };
-
+///////////////////////DAILY BIKE TRAFFIC TOTALS///////////////////////////////
     charts.displayDataTrafficByDayChart = function() {
       charts.updateSvg('.dataGraphTrafficHourly');
       x.domain(dataTrafficByDay.map(function(d) {
@@ -279,6 +310,7 @@
         return d.total;
       })]);
 
+
       svg.append('text')
         .attr('x', (width / 2))
         .attr('y', 0 - (margin.top / 2))
@@ -287,10 +319,10 @@
         .style('fill', 'white')
         .text('Bike Traffic Totals Per Day');
 
-
       svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .attr('class', 'axisWhite')
+        .attr('id', 'xAxis')
         .call(d3.axisBottom(x))
         .selectAll('text')
           .style('text-anchor', 'end')
@@ -322,7 +354,7 @@
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(d.total + ' bikers')
+          div.html(d.total + ' bikers<br>' + d.date)
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
@@ -333,17 +365,36 @@
             .duration(500)
             .style('opacity', 0);
         });
+      var ticks = svg.selectAll('#xAxis .tick text');
+      if (dataTraffic.length > 2000 && dataTraffic.length < 8760){
+        ticks.attr('class', function(d,i){
+          if(i % 7 != 0) d3.select(this).remove();
+        });
+      }
+      if (dataTraffic.length > 8760 && dataTraffic.length < 15000){
+        ticks.attr('class', function(d,i){
+          if(i % 14 != 0) d3.select(this).remove();
+        });
+      }
+      if (dataTraffic.length > 15000){
+        ticks.attr('class', function(d,i){
+          if(i % 28 != 0) d3.select(this).remove();
+        });
+      }
+
     };
 
     if(traffic.allTraffic.length > 8760){
       charts.displayMonthlyChart();
     }
-    if(traffic.allTraffic.length < 168){
+    if(traffic.allTraffic.length < 193){
       charts.displayDataTrafficChart();
     } else {
       charts.displayDailyChart();
     }
-    charts.displayDataTrafficByDayChart();
+    if(traffic.allTraffic.length > 24){
+      charts.displayDataTrafficByDayChart();
+    }
     charts.displayHourlyChart();
 
   };

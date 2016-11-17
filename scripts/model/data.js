@@ -84,6 +84,7 @@
             localStorage.setItem('lastUpdated', lastUpdated);
           } else {
             traffic.initialObj = JSON.parse(localStorage.initialObj);
+            traffic.loadImmediately();
           }
         }//end success
       });//end ajax
@@ -267,7 +268,6 @@
   };
 
 /////////////////////////////Hourly Data Average//////////////////////////////////
-  traffic.hourlyDataToDisplay = [];
   function HourlyDataObj(data){
     this.hour = data.hour;
     this.avg = data.avg;
@@ -275,6 +275,7 @@
     this.avgSb = data.avgSb;
   }
   traffic.hourlyAverageData = function(data, data2, data3){
+    traffic.hourlyDataToDisplay = [];
     var hoursOfDay = ['12AM','1AM','2AM','3AM','4AM','5AM','6AM','7AM','8AM','9AM','10AM','11AM',
     '12PM','1PM','2PM','3PM','4PM','5PM','6PM','7PM','8PM','9PM','10PM','11PM'];
     var dataObj = {};
