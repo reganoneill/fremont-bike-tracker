@@ -146,10 +146,15 @@ h3 {
   fill: white;
 }
 
+#profile-container {
+  background-color: yellow;
+}
+.profile-foto img{
+  width: 4em;
+  height: 4em;
+}
 
-/*svg{
-  display: none;
-}*/
+
 
 div.tooltip {
   position: absolute;
@@ -166,4 +171,20 @@ div.tooltip {
 
 .mouseover-color {
   fill: #0072ab;
+}
+
+/*
+
+MEDIA QUERIES FOR SVGS
+
+*/
+
+@media screen and (max-width: 920px){
+
+  .dataGraph {
+    overflow: scroll;
+  }
+  .aboutUS, .bridgeHistory{
+    padding: 1.5em;
+  }
 }
