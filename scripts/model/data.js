@@ -28,18 +28,6 @@
     });
     console.log(traffic.allTraffic);
   };
-  //
-  // traffic.totalTraffic =  function(data){
-  //   data.map(function(d){
-  //     return {
-  //       date : d.date,
-  //       nb : d.fremont_bridge_nb,
-  //       sb : d.fremont_bridge_sb,
-  //       total : d.fremont_bridge_nb + d.fremont_bridge_sb
-  //     };
-  //   });
-  // };
-
 
 //this function makes an ajax call to the API - specifically to our starting dat (jan 01 2013)
 //
@@ -145,13 +133,17 @@
   function DateType(date){
     this.fremont_bridge_nb = 0,
     this.fremont_bridge_sb = 0,
+    this.total = 0;
+
     this.date = date;
   };
   DateType.prototype.add = function(direction, value){
     if (direction === 'nb'){
       this.fremont_bridge_nb += value;
+      this.total += value;
     }else {
       this.fremont_bridge_sb += value;
+      this.total += value;
     }
   };
 
