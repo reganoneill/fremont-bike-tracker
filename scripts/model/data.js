@@ -26,7 +26,7 @@
     }).map(function(ele) {
       return new Traffic(ele);
     });
-    console.log(traffic.allTraffic);
+    // console.log(traffic.allTraffic);
   };
 
 //this function makes an ajax call to the API - specifically to our starting dat (jan 01 2013)

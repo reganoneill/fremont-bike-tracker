@@ -145,25 +145,6 @@ h3 {
   fill: white;
 }
 
-
-/*svg{
-  display: none;
-}*/
-
-<<<<<<< HEAD
-
-/*
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////
-////////////////////////
-////////////--------   styling for about.html ------////////////////////
-////////////////////////
-////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-*/
-
-
-
 #profile-container {
   background-color: yellow;
 }
@@ -174,13 +155,6 @@ h3 {
 
 
 
-
-/*
-/////
-end about.html styling
-/////
-*/
-=======
 div.tooltip {
   position: absolute;
   text-align: center;
@@ -197,4 +171,29 @@ div.tooltip {
 .mouseover-color {
   fill: #0072ab;
 }
->>>>>>> c901ecd3c3e35f490a0a1274a19661bfc4dfa8cd
+
+
+/*.dataGraph .allGraphInfo svg {
+  width: 100%;
+  display: block;
+  overflow: auto;
+}*/
+
+
+
+
+/*
+
+MEDIA QUERIES FOR SVGS
+
+*/
+
+@media screen and (max-width: 920px){
+
+  .dataGraph {
+    overflow: scroll;
+  }
+  .aboutUS, .bridgeHistory{
+    padding: 1.5em;
+  }
+}
