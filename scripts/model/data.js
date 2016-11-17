@@ -3,6 +3,7 @@
   var traffic = {};
   traffic.allTraffic = [];
   traffic.limitDates = false;
+  traffic.limitDates2 = false;
   var total = 0;
   var avg = 0;
   var peakNB = {nb:0, sb:0};
@@ -89,10 +90,19 @@
     total = 0;
     var add;
     if (traffic.limitDates){
-      add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
-      + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+      if(traffic.limitDates2){
+        add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
+        + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+      } else {
+        add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
+        + 'T00:00.000%27';
+      }
     } else {
-      add = '?$where=date>=%272013-01-01T00:00.000%27';
+      if(traffic.limitDates2){
+        add = '?$where=date>=%272013-01-01T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+      } else {
+        add = '?$where=date>=%272016-10-01T00:00.000%27';
+      }
     }
     var limit = '&$limit=50000';
     var order = '&$order=date';
@@ -135,12 +145,12 @@
     traffic.monthlyArray = [];
     traffic.yearlyArray = [];
 
-    var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('DD-MM-YYYY:ddd'));
+    var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('MM-DD-YYYY:ddd'));
     var workingMonth = new DateType(moment(traffic.allTraffic[0].date).format('MM-YYYY'));
     var workingYear = new DateType(moment(traffic.allTraffic[0].date).format('YYYY'));
 
     traffic.allTraffic.forEach(function(data, idx){
-      var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY:ddd');
+      var date = moment(traffic.allTraffic[idx].date).format('MM-DD-YYYY:ddd');
       var month = moment(traffic.allTraffic[idx].date).format('MM-YYYY');
       var year = moment(traffic.allTraffic[idx].date).format('YYYY');
 
@@ -245,9 +255,9 @@
     var dataObj = {};
     data.forEach(function(eachHour, idx){
       dataObj.hour = hoursOfDay[idx];
-      dataObj.avg = eachHour;
-      dataObj.avgNb = data2[idx];
-      dataObj.avgSb = data3[idx];
+      dataObj.avg = parseInt(eachHour);
+      dataObj.avgNb = parseInt(data2[idx]);
+      dataObj.avgSb = parseInt(data3[idx]);
       traffic.hourlyDataToDisplay.push(new HourlyDataObj(dataObj));
     });
   };
@@ -330,9 +340,9 @@
     var dataObj = {};
     data[0].forEach(function(eachDay, idx){
       dataObj.day = daysOfWeek[idx];
-      dataObj.avg = eachDay;
-      dataObj.avgNb = data[1][idx];
-      dataObj.avgSb = data[2][idx];
+      dataObj.avg = parseInt(eachDay);
+      dataObj.avgNb = parseInt(data[1][idx]);
+      dataObj.avgSb = parseInt(data[2][idx]);
       traffic.dailyDataToDisplay.push(new AvgDataObj(dataObj));
     });
   };
@@ -370,9 +380,9 @@
     var dataObj = {};
     data[0].forEach(function(eachMonth, idx){
       dataObj.month = months[idx];
-      dataObj.avg = eachMonth;
-      dataObj.avgNb = data[1][idx];
-      dataObj.avgSb = data[2][idx];
+      dataObj.avg = parseInt(eachMonth);
+      dataObj.avgNb = parseInt(data[1][idx]);
+      dataObj.avgSb = parseInt(data[2][idx]);
       traffic.monthlyDataToDisplay.push(new AvgMonthlyObj(dataObj));
     });
   };

@@ -12,6 +12,12 @@
     else {
       traffic.limitDates = true;
     }
+    if ($('input#to').val() === ''){
+      traffic.limitDates2 = false;
+    }
+    else {
+      traffic.limitDates2 = true;
+    }
     traffic.requestTraffic(traffic.calcNumbers);
 
   });
