@@ -2,6 +2,7 @@
 (function(module) {
   var trafficView = {};
   traffic.date1, traffic.date2;
+
   var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
   $('#submit-dates').on('click', function(e){
@@ -71,7 +72,10 @@
     // console.log(calTo);
   };
 // end date range picker from jqueryui.com
-
+  traffic.displayGeneralStats = function(){
+    var t = traffic.submitCount;
+    $('#generalStats').empty().append( '<br><hr><h2>General Statistics</h2><h4>Selected dates from <strong><i>' + traffic.generalDataToDisplay[t].startDate +  '<i><strong> to <strong><i>' + traffic.generalDataToDisplay[t].endDate + '<i><strong></h4><h4>Which accounts for ' + traffic.generalDataToDisplay[t].numberOfDays + ' days</h4><h4>Total: ' + traffic.generalDataToDisplay[t].total + ' bikers</h4><h4>Average: ' + traffic.generalDataToDisplay[t].average + ' per hour</h4><h4>Peak Northbound Traffic: ' + traffic.generalDataToDisplay[t].peakNB.nb + ' bikers on ' + traffic.generalDataToDisplay[t].peakNB.date + '</h4><h4>Peak SouthBound Traffic: ' + traffic.generalDataToDisplay[t].peakSB.sb + ' bikers on ' + traffic.generalDataToDisplay[t].peakSB.date + '</h4><h4>Peak Overall Traffic: ' + traffic.generalDataToDisplay[t].peak.peak + ' bikers on ' + traffic.generalDataToDisplay[t].peak.date + '</h4><br><hr>');
+  };
 
   traffic.datePick();
 

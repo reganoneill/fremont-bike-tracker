@@ -4,6 +4,7 @@
   traffic.allTraffic = [];
   traffic.limitDates = false;
   traffic.limitDates2 = false;
+  traffic.submitCount = -1;
   var total = 0;
   var avg = 0;
   var peakNB = {nb:0, sb:0};
@@ -105,12 +106,16 @@
       } else {
         add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
         + 'T00:00.000%27';
+        traffic.date2 = 'Present';
       }
     } else {
       if(traffic.limitDates2){
         add = '?$where=date>=%272013-01-01T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+        traffic.date1 = '2013-01-01T00:00.000';
       } else {
         add = '?$where=date>=%272016-10-01T00:00.000%27';
+        traffic.date1 = '01 January 2013';
+        traffic.date2 = 'Present';
       }
     }
     var limit = '&$limit=50000';
@@ -152,6 +157,9 @@
     traffic.dailyArray = [];
     traffic.monthlyArray = [];
     traffic.yearlyArray = [];
+
+    var startDate = (traffic.date1 === '01 January 2013') ? traffic.date1 : moment(traffic.date1).format('DD MMMM YYYY');
+    var endDate = (traffic.date2 === 'Present') ? traffic.date2 : moment(traffic.date2).format('DD MMMM YYYY');
 
     var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('MM-DD-YYYY:ddd'));
     var workingMonth = new DateType(moment(traffic.allTraffic[0].date).format('MM-YYYY'));
@@ -239,18 +247,22 @@
     traffic.dailyAverageData(traffic.dailyAverages(traffic.dailyArray));
     traffic.hourlyAverageData(traffic.hourlyAvgAll, traffic.hourlyAvgNb, traffic.hourlyAvgSb);
     traffic.generalDataToDisplay.push(new GeneralDataObj(traffic.numberOfDays, total, avg, peakNB,
-       peakSB, peak));
+       peakSB, peak, startDate, endDate));
+    traffic.submitCount++;
+    traffic.displayGeneralStats();
     charts.drawCharts();
   };
 /////////////////////////////General Data//////////////////////////////////////
   traffic.generalDataToDisplay = [];
-  function GeneralDataObj(nod, tot, avg, pNb, pSb, p){
+  function GeneralDataObj(nod, tot, avg, pNb, pSb, p, start, end){
     this.numberOfDays = nod,
     this.total = tot,
     this.average = avg,
     this.peakNB = pNb,
     this.peakSB = pSb,
     this.peak = p;
+    this.startDate = start;
+    this.endDate = end;
   };
 
 /////////////////////////////Hourly Data Average//////////////////////////////////
