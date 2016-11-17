@@ -135,4 +135,4 @@
   traffic.loadImmediately();
 
   module.trafficView = trafficView;
-})(window)
+})(window);

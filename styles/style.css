@@ -19,6 +19,14 @@
   text-align: justify;
 }
 
+.initial-locStorage-vals{
+  text-align: center;
+    color: white;
+    border: 3px outset #c29970;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
 .dataGraph{
   position: relative;
   color: #ddd;
