@@ -15,22 +15,20 @@
   position: relative;
   color: #ddd;
   background-color: #282E34;
-  text-align: center;
   padding: 50px 80px;
-  text-align: justify;
+  text-align: center;
 }
 
 .gitPicMarc{
-  width:190px;
-  height:100px;
-  margin-top: 5px;
-  margin-left: 475px;
+  width:50px;
+  height:50px;
+  margin: auto;
 }
 
 .linkPicMarc  {
   width:50px;
   height:50px;
-  margin-bottom: 25px;
+  margin:auto;
 }
 
 /*Regan Information*/
@@ -38,22 +36,20 @@
   position: relative;
   color: #ddd;
   background-color: #282E34;
-  text-align: center;
   padding: 50px 80px;
-  text-align: justify;
+  text-align: center;
 }
 
 .gitPicRegan{
-  width:190px;
-  height:100px;
-  margin-top: 5px;
-  margin-left: 480px;
+  width:50px;
+  height:50px;
+  margin: auto;
 }
 
 .linkPicRegan{
   width:50px;
   height:50px;
-  margin-bottom: 25px;
+  margin:auto;
 }
 
 /*Erick Information*/
@@ -61,43 +57,40 @@
   position: relative;
   color: #ddd;
   background-color: #282E34;
-  text-align:center;
   padding: 50px 80px;
   text-align: center;
 }
+
 .gitPicErick{
-  width:190px;
-  height:100px;
-  margin-top: 5px;
+  width:50px;
+  height:50px;
+  margin: auto;
 }
 
 .linkPicErick{
   width:50px;
   height:50px;
-  margin-bottom: 25px;
-  margin-right: 80px;
+  margin:auto;
 }
 /*Pavel Information*/
 .pavelClass{
   position: relative;
   color: #ddd;
   background-color: #282E34;
-  text-align: center;
   padding: 50px 80px;
-  text-align: justify;
+  text-align: center;
 }
 
 .gitPicPavel{
-  width:190px;
-  height:100px;
-  margin-top: 5px;
-  margin-left: 480px;
+  width:50px;
+  height:50px;
+  margin: auto;
 }
 
 .linkPicPavel{
   width:50px;
   height:50px;
-  margin-bottom: 25px;
+  margin:auto;
 }
 
 body, html {
@@ -106,7 +99,7 @@ body, html {
   font: 400 15px/1.8 "Lato", sans-serif;
   color: #777;
 }
-
+/*Paralax Scrolling Under*/
 .boatPic, .marcPic, .reganPic, .erickPic, .pavelPic {
   background-color: black;
   position: relative;
