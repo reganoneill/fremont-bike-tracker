@@ -8,9 +8,9 @@
     var dataMonthly = traffic.monthlyDataToDisplay;
     var dataTrafficByDay = traffic.dailyArray;
 
-    var margin = {top: 120, right: 30, bottom: 30, left: 40},
+    var margin = {top: 120, right: 30, bottom: 120, left: 40},
       width = 800 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      height = 500 - margin.top - margin.bottom;
 
     var x = d3.scaleBand()
       .range([0, width])
@@ -291,7 +291,12 @@
       svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .attr('class', 'axisWhite')
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+          .style('text-anchor', 'end')
+          .attr('dx', '-.8em')
+          .attr('dy', '.15em')
+          .attr('transform', 'rotate(-75)');
 
       svg.append('g')
         .attr('class', 'axisWhite')
