@@ -7,6 +7,8 @@
     var dataDaily = traffic.dailyDataToDisplay;
     var dataMonthly = traffic.monthlyDataToDisplay;
     var dataTrafficByDay = traffic.dailyArray;
+    dataTrafficByDay.reverse();
+    dataTraffic.reverse();
 
     var margin = {top: 120, right: 30, bottom: 120, left: 40},
       width = 800 - margin.left - margin.right,
@@ -34,7 +36,7 @@
         .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
     };
 
-///////////////////////
+///////////////////////HOURLY BIKE TRAFFIC TOTALS///////////////////////////////
     charts.displayDataTrafficChart = function() {
       charts.updateSvg('.dataGraphTraffic');
       x.domain(dataTraffic.map(function(d) {
@@ -55,7 +57,13 @@
       svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .attr('class', 'axisWhite')
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+          .style('text-anchor', 'end')
+          .attr('dx', '-.8em')
+          .attr('dy', '.15em')
+          .attr('transform', 'rotate(-75)');
+
 
       svg.append('g')
         .attr('class', 'axisWhite')
@@ -93,7 +101,7 @@
             .style('opacity', 0);
         });
     };
-
+///////////////////////AVG BIKE TRAFFIC PER HOUR///////////////////////////////
     charts.displayHourlyChart = function() {
       charts.updateSvg('.dataGraphHourly');
       x.domain(dataHourly.map(function(d) {
@@ -152,7 +160,7 @@
             .style('opacity', 0);
         });
     };
-
+///////////////////////AVG BIKE TRAFFIC PER DAY///////////////////////////////
     charts.displayDailyChart = function() {
       charts.updateSvg('.dataGraphDaily');
       x.domain(dataDaily.map(function(d) {
@@ -211,7 +219,7 @@
             .style('opacity', 0);
         });
     };
-
+///////////////////////AVG BIKE TRAFFIC PER MONTH//////////////////////////////
     charts.displayMonthlyChart = function() {
       charts.updateSvg('.dataGraphMonthly');
       x.domain(dataMonthly.map(function(d) {
@@ -269,7 +277,7 @@
             .style('opacity', 0);
         });
     };
-
+///////////////////////DAILY BIKE TRAFFIC TOTALS///////////////////////////////
     charts.displayDataTrafficByDayChart = function() {
       charts.updateSvg('.dataGraphTrafficHourly');
       x.domain(dataTrafficByDay.map(function(d) {
@@ -286,7 +294,6 @@
         .style('font-size', '22px')
         .style('fill', 'white')
         .text('Bike Traffic Totals Per Day');
-
 
       svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
