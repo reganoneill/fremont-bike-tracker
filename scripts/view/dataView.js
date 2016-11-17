@@ -3,7 +3,7 @@
   var trafficView = {};
   traffic.date1, traffic.date2;
 
-  var trafficCompiler = Handlebars.compile($('#traffic-template').html());
+  // var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
@@ -34,7 +34,6 @@
         })
         .on( 'change', function() {
           traffic.date1 = getDate(this);
-          console.log(traffic.date1);
           to.datepicker( 'option', 'minDate', getDate( this ) );
         }),
       to = $( '#to' ).datepicker({
@@ -136,7 +135,7 @@
     console.log(displayFirstLoadVals.total);
     $('.initial-locStorage-vals').append('Total bike crossings from the previous month: ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
   };
-  traffic.loadImmediately();
+  // traffic.loadImmediately();
 
   module.trafficView = trafficView;
 })(window);
