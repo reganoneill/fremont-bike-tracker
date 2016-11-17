@@ -77,7 +77,7 @@
         })
         .on('mouseover', function(d) {
           var rect = $(d3.event.target);
-          rect.addClass('mouseover');
+          rect.addClass('mouseover-color');
           div.transition()
             .duration(200)
             .style('opacity', .9);
@@ -87,7 +87,7 @@
         })
         .on('mouseout', function() {
           var rect = $(d3.event.target);
-          rect.removeClass('mouseover');
+          rect.removeClass('mouseover-color');
           div.transition()
             .duration(500)
             .style('opacity', 0);
@@ -136,7 +136,7 @@
         })
         .on('mouseover', function(d) {
           var rect = $(d3.event.target);
-          rect.addClass('mouseover');
+          rect.addClass('mouseover-color');
           div.transition()
             .duration(200)
             .style('opacity', .9);
@@ -146,7 +146,7 @@
         })
         .on('mouseout', function() {
           var rect = $(d3.event.target);
-          rect.removeClass('mouseover');
+          rect.removeClass('mouseover-color');
           div.transition()
             .duration(500)
             .style('opacity', 0);
@@ -195,7 +195,7 @@
         })
         .on('mouseover', function(d) {
           var rect = $(d3.event.target);
-          rect.addClass('mouseover');
+          rect.addClass('mouseover-color');
           div.transition()
             .duration(200)
             .style('opacity', .9);
@@ -205,7 +205,7 @@
         })
         .on('mouseout', function() {
           var rect = $(d3.event.target);
-          rect.removeClass('mouseover');
+          rect.removeClass('mouseover-color');
           div.transition()
             .duration(500)
             .style('opacity', 0);
@@ -253,7 +253,7 @@
         })
         .on('mouseover', function(d) {
           var rect = $(d3.event.target);
-          rect.addClass('mouseover');
+          rect.addClass('mouseover-color');
           div.transition()
             .duration(200)
             .style('opacity', .9);
@@ -263,7 +263,7 @@
         })
         .on('mouseout', function() {
           var rect = $(d3.event.target);
-          rect.removeClass('mouseover');
+          rect.removeClass('mouseover-color');
           div.transition()
             .duration(500)
             .style('opacity', 0);
@@ -313,7 +313,7 @@
         })
         .on('mouseover', function(d) {
           var rect = $(d3.event.target);
-          rect.addClass('mouseover');
+          rect.addClass('mouseover-color');
           div.transition()
             .duration(200)
             .style('opacity', .9);
@@ -323,7 +323,7 @@
         })
         .on('mouseout', function() {
           var rect = $(d3.event.target);
-          rect.removeClass('mouseover');
+          rect.removeClass('mouseover-color');
           div.transition()
             .duration(500)
             .style('opacity', 0);

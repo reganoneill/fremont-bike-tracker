@@ -163,6 +163,6 @@ div.tooltip {
   pointer-events: none;
 }
 
-.mouseover {
-  fill: blue;
+.mouseover-color {
+  fill: #0072ab;
 }
