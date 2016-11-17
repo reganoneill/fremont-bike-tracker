@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fremont Patroller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <link rel="stylesheet" href="styles/style.css" type="text/css">
+    <link rel="icon" href="imgs/bike.ico" type="image/x-icon">
+    <script id="the-team-template" type="text/x-handlebars-template">
+      <div id="profile-container">
+        <div class="profile-foto"><img src="{{picture}}"></div>
+        <p>{{name}}</p>
+        <p class="description">{{description}}</p>
+        <p class="motto">{{motto}}</p>
+        <p class="webby">{{webby}}</p>
+        <ul class="team-social"><a href="{{social}}"><img src="imgs/githubicon.svg"></a><a href="{{social}}"><img src="imgs/linkedIn.svg"></a></ul>
+      </div>
+    </script>
+  </head>
+  <body>
+    <div class="topTitle">
+      <h3>Fremont Patroller</h3>
+    </div>
+    <main>
+    <!-- profiles will go here -->
+    <div class="profiles"></div>
+  </main>
+  </body>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.1/handlebars.js"></script> -->
+  <script src="vendor/scripts/handlebars.js"></script>
+  <script src="scripts/model/profiles.js"></script>
+
+</html>

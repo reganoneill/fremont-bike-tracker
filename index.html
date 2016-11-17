@@ -13,6 +13,14 @@
       <p>Southbound Traffic: {{fremont_bridge_sb}}</p>
     </li>
   </script>
+  <script id="the-team-template" type="text/x-handlebars-template">
+    <li>
+      <div class="profile-foto">{{picture}}</div>
+      <p class="description">{{description}}</p>
+      <p class="motto">{{motto}}</p>
+      <p class="webby">{{webby}}</p>
+    </li>
+  </script>
   </head>
 
   <body>
@@ -63,6 +71,9 @@
       <p>The Fremont Bridge is a double-leaf bascule bridge that spans the Fremont Cut in Seattle, Washington. The bridge, which connects Fremont Avenue North and 4th Avenue North, connects the neighborhoods of Fremont and Queen Anne. The Fremont Bridge was opened on Friday June 15, 1917, at a cost of $410,000. The bridge was added to the National Register of Historic Places in 1982, and is also a designated city landmark. Due to its low vessel clearance of 30 feet, the Fremont Bridge opens an average of 35 times a day, which makes it the most frequently opened drawbridge in the United States and one of the busiest bascule bridges in the world.</p>
   </div>
 
+
+
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="vendor/scripts/d3.js"></script>
@@ -71,7 +82,9 @@
     <script src="vendor/scripts/moment.js"></script>
     <script src="scripts/view/d3graphs.js"></script>
     <script src="/scripts/model/data.js"></script>
+    <script src="/scripts/model/profiles.js"></script>
     <script src="/scripts/view/dataView.js"></script>
+    <script src="/scripts/view/profileView.js"></script>
     <script src="scripts/controller/dataController.js"></script>
     <script src="scripts/controller/routes.js"></script>
   </body>

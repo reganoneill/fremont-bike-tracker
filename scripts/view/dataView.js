@@ -1,5 +1,6 @@
 'use strict';
 (function(module) {
+
   var trafficView = {};
   traffic.date1, traffic.date2;
   var trafficCompiler = Handlebars.compile($('#traffic-template').html());
@@ -59,40 +60,11 @@
 
       return date;
     }
-
-    // var calTo = $('input#to').val();
-    // console.log(calFrom);
-    // console.log(calTo);
   };
-// end date range picker from jqueryui.com
-
 
   traffic.datePick();
 
-  //write functionality here which can take the three object properties
-  //from localStorage's initialObj object and display them in the 'about'
-  //section of the home page
-
-  //var upToDate = (moment(localStorage.lastUpdated).format('YYYY');
-  // var add = '?$where=date>=%272013-01-01T00:00.000%27';
-  // var limit = '&$limit=4000';
-  // var order = '&$order=date';
-
-  // var toDate1 = function(){
-  //   var upToDate = new Date();
-  //   console.log(upToDate.getFullYear());
-  //   console.log(upToDate.getMonth());
-  //   // console.log(upToDate);
-  //   upToDate = (moment(upToDate).format('YYYY'));
-  //   console.log(upToDate);
-  // };
-  // toDate1();
-
   traffic.loadImmediately = function(){
-    // var obj = {};
-    // var add = '?$where=date>=%272013-01-01T00:00.000%27';
-    // var limit = '&$limit=4000';
-    // var order = '&$order=date';
     var obj = {};
     var upToDate = new Date();
     var upToDateYear = upToDate.getFullYear();
@@ -102,6 +74,7 @@
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + addToQueryString,
       type: 'GET',
       success: function(data, message, xhr){
+        if(localStorage.lastUpdated !== xhr.getResponseHeader('Last-Modified')){
         traffic.loadAll(data);
         var totalNb = 0;
         var totalSb = 0;
@@ -118,15 +91,21 @@
           totalSouth : totalSb
         };
         localStorage.setItem('recentStats', JSON.stringify(obj));
-      }
-    });
+      }//end if
+      else{
+        console.log('all good! we are up to date');
+      }//end else
+    }//end success
+  });//end ajax request
     //now write functionality to make last month's date (gathered above) display in
     //the DOM.
     var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
-    console.log(displayFirstLoadVals.total);
+    // console.log(displayFirstLoadVals.total);
     $('.initial-locStorage-vals').append('Total bike crossings from the previous month: ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
   };
+
   traffic.loadImmediately();
 
   module.trafficView = trafficView;
-})(window)
+
+})(window);
