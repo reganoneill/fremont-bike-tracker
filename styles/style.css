@@ -133,6 +133,14 @@ h3 {
   fill: #c29970;
 }
 
+.Northbound .bar{
+  fill: red;
+}
+
+.Southbound .bar{
+  fill: blue;
+}
+
 .axisWhite line{
   stroke: white;
 }
