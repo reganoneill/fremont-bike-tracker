@@ -1,7 +1,7 @@
 'use strict';
 (function(module) {
   var trafficView = {};
-  traffic.date1, traffic.date2;
+  traffic.date1 = '', traffic.date2 = '';
 
   // var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 

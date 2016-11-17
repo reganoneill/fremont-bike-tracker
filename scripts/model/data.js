@@ -12,9 +12,10 @@
   var peak = {peak:0};
 
   function Traffic (opts) {
-    Object.keys(opts).forEach(function(prop) {
-      this[prop] = opts[prop];
-    }, this);
+    this.date = opts.date,
+    this.fremont_bridge_nb = parseInt(opts.fremont_bridge_nb),
+    this.fremont_bridge_sb = parseInt(opts.fremont_bridge_sb),
+    this.total = parseInt(opts.fremont_bridge_nb) + parseInt(opts.fremont_bridge_sb);
   };
 
 //inputData is the data from the API. This function sorts it, assigns each Object
@@ -27,6 +28,17 @@
     });
     console.log(traffic.allTraffic);
   };
+  //
+  // traffic.totalTraffic =  function(data){
+  //   data.map(function(d){
+  //     return {
+  //       date : d.date,
+  //       nb : d.fremont_bridge_nb,
+  //       sb : d.fremont_bridge_sb,
+  //       total : d.fremont_bridge_nb + d.fremont_bridge_sb
+  //     };
+  //   });
+  // };
 
 
 //this function makes an ajax call to the API - specifically to our starting dat (jan 01 2013)
@@ -110,7 +122,7 @@
     } else {
       if(traffic.limitDates2){
         add = '?$where=date>=%272013-01-01T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
-        traffic.date1 = '2013-01-01T00:00.000';
+        traffic.date1 = '01 January 2013';
       } else {
         add = '?$where=date>=%272016-10-01T00:00.000%27';
         traffic.date1 = '01 January 2013';
