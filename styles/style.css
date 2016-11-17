@@ -19,6 +19,14 @@
   text-align: justify;
 }
 
+.initial-locStorage-vals{
+  text-align: center;
+    color: white;
+    border: 3px outset #c29970;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
 .dataGraph{
   position: relative;
   color: #ddd;
@@ -137,10 +145,12 @@ h3 {
   fill: white;
 }
 
+
 /*svg{
   display: none;
 }*/
 
+<<<<<<< HEAD
 
 /*
 ////////////////////////////////////////////////////////////////////////
@@ -170,3 +180,21 @@ h3 {
 end about.html styling
 /////
 */
+=======
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.mouseover-color {
+  fill: #0072ab;
+}
+>>>>>>> c901ecd3c3e35f490a0a1274a19661bfc4dfa8cd

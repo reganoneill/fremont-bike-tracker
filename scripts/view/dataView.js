@@ -2,8 +2,9 @@
 (function(module) {
 
   var trafficView = {};
-  traffic.date1, traffic.date2;
-  var trafficCompiler = Handlebars.compile($('#traffic-template').html());
+  traffic.date1 = '', traffic.date2 = '';
+
+  // var trafficCompiler = Handlebars.compile($('#traffic-template').html());
 
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
@@ -12,6 +13,12 @@
     }
     else {
       traffic.limitDates = true;
+    }
+    if ($('input#to').val() === ''){
+      traffic.limitDates2 = false;
+    }
+    else {
+      traffic.limitDates2 = true;
     }
     traffic.requestTraffic(traffic.calcNumbers);
 
@@ -28,7 +35,6 @@
         })
         .on( 'change', function() {
           traffic.date1 = getDate(this);
-          console.log(traffic.date1);
           to.datepicker( 'option', 'minDate', getDate( this ) );
         }),
       to = $( '#to' ).datepicker({
@@ -60,6 +66,12 @@
 
       return date;
     }
+  };
+
+// end date range picker from jqueryui.com
+  traffic.displayGeneralStats = function(){
+    var t = traffic.submitCount;
+    $('#generalStats').empty().append( '<br><hr><h2>General Statistics</h2><h4>Selected dates from <strong><i>' + traffic.generalDataToDisplay[t].startDate +  '<i><strong> to <strong><i>' + traffic.generalDataToDisplay[t].endDate + '<i><strong></h4><h4>Which accounts for ' + traffic.generalDataToDisplay[t].numberOfDays + ' days</h4><h4>Total: ' + traffic.generalDataToDisplay[t].total + ' bikers</h4><h4>Average: ' + traffic.generalDataToDisplay[t].average + ' per hour</h4><h4>Peak Northbound Traffic: ' + traffic.generalDataToDisplay[t].peakNB.nb + ' bikers on ' + traffic.generalDataToDisplay[t].peakNB.date + '</h4><h4>Peak SouthBound Traffic: ' + traffic.generalDataToDisplay[t].peakSB.sb + ' bikers on ' + traffic.generalDataToDisplay[t].peakSB.date + '</h4><h4>Peak Overall Traffic: ' + traffic.generalDataToDisplay[t].peak.peak + ' bikers on ' + traffic.generalDataToDisplay[t].peak.date + '</h4><br><hr>');
   };
 
   traffic.datePick();
@@ -104,8 +116,7 @@
     $('.initial-locStorage-vals').append('Total bike crossings from the previous month: ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
   };
 
-  traffic.loadImmediately();
+  // traffic.loadImmediately();
 
   module.trafficView = trafficView;
-
 })(window);

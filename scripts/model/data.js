@@ -3,6 +3,8 @@
   var traffic = {};
   traffic.allTraffic = [];
   traffic.limitDates = false;
+  traffic.limitDates2 = false;
+  traffic.submitCount = -1;
   var total = 0;
   var avg = 0;
   var peakNB = {nb:0, sb:0};
@@ -10,9 +12,10 @@
   var peak = {peak:0};
 
   function Traffic (opts) {
-    Object.keys(opts).forEach(function(prop) {
-      this[prop] = opts[prop];
-    }, this);
+    this.date = opts.date,
+    this.fremont_bridge_nb = parseInt(opts.fremont_bridge_nb),
+    this.fremont_bridge_sb = parseInt(opts.fremont_bridge_sb),
+    this.total = parseInt(opts.fremont_bridge_nb) + parseInt(opts.fremont_bridge_sb);
   };
 
 //inputData is the data from the API. This function sorts it, assigns each Object
@@ -25,7 +28,6 @@
     });
     console.log(traffic.allTraffic);
   };
-
 
 //this function makes an ajax call to the API - specifically to our starting dat (jan 01 2013)
 //
@@ -81,7 +83,6 @@
             localStorage.setItem('initialObj', initialObj);
             localStorage.setItem('lastUpdated', lastUpdated);
           } else {
-            console.log('same');
             traffic.initialObj = JSON.parse(localStorage.initialObj);
           }
         }//end success
@@ -98,34 +99,51 @@
 
     var add;
     if (traffic.limitDates){
-      add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
-      + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+      if(traffic.limitDates2){
+        add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
+        + 'T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+      } else {
+        add = '?$where=date%3E=%27' + traffic.date1.getFullYear() + '-' + (traffic.date1.getMonth() + 1) + '-' + traffic.date1.getDate()
+        + 'T00:00.000%27';
+        traffic.date2 = 'Present';
+      }
     } else {
-      add = '?$where=date>=%272013-01-01T00:00.000%27';
+      if(traffic.limitDates2){
+        add = '?$where=date>=%272013-01-01T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
+        traffic.date1 = '01 January 2013';
+      } else {
+        add = '?$where=date>=%272016-10-01T00:00.000%27';
+        traffic.date1 = '01 January 2013';
+        traffic.date2 = 'Present';
+      }
     }
     var limit = '&$limit=50000';
     var order = '&$order=date';
     $.ajax({
-      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + order,
+      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
       type: 'GET',
       success: function(data){
         traffic.loadAll(data);
         callback();
-        }
-      });
-    };
+      }
+    });
+  };
 
 
   function DateType(date){
     this.fremont_bridge_nb = 0,
     this.fremont_bridge_sb = 0,
+    this.total = 0;
+
     this.date = date;
   };
   DateType.prototype.add = function(direction, value){
     if (direction === 'nb'){
       this.fremont_bridge_nb += value;
+      this.total += value;
     }else {
       this.fremont_bridge_sb += value;
+      this.total += value;
     }
   };
 
@@ -143,14 +161,15 @@
     traffic.monthlyArray = [];
     traffic.yearlyArray = [];
 
-    var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('DD-MM-YYYY:ddd'));
+    var startDate = (traffic.date1 === '01 January 2013') ? traffic.date1 : moment(traffic.date1).format('DD MMMM YYYY');
+    var endDate = (traffic.date2 === 'Present') ? traffic.date2 : moment(traffic.date2).format('DD MMMM YYYY');
+
+    var workingDay = new DateType(moment(traffic.allTraffic[0].date).format('MM-DD-YYYY:ddd'));
     var workingMonth = new DateType(moment(traffic.allTraffic[0].date).format('MM-YYYY'));
     var workingYear = new DateType(moment(traffic.allTraffic[0].date).format('YYYY'));
-    console.log(workingDay);
-    console.log(workingDay.date);
 
     traffic.allTraffic.forEach(function(data, idx){
-      var date = moment(traffic.allTraffic[idx].date).format('DD-MM-YYYY:ddd');
+      var date = moment(traffic.allTraffic[idx].date).format('MM-DD-YYYY:ddd');
       var month = moment(traffic.allTraffic[idx].date).format('MM-YYYY');
       var year = moment(traffic.allTraffic[idx].date).format('YYYY');
 
@@ -229,18 +248,22 @@
     traffic.dailyAverageData(traffic.dailyAverages(traffic.dailyArray));
     traffic.hourlyAverageData(traffic.hourlyAvgAll, traffic.hourlyAvgNb, traffic.hourlyAvgSb);
     traffic.generalDataToDisplay.push(new GeneralDataObj(traffic.numberOfDays, total, avg, peakNB,
-       peakSB, peak));
+       peakSB, peak, startDate, endDate));
+    traffic.submitCount++;
+    traffic.displayGeneralStats();
     charts.drawCharts();
   };
 /////////////////////////////General Data//////////////////////////////////////
   traffic.generalDataToDisplay = [];
-  function GeneralDataObj(nod, tot, avg, pNb, pSb, p){
+  function GeneralDataObj(nod, tot, avg, pNb, pSb, p, start, end){
     this.numberOfDays = nod,
     this.total = tot,
     this.average = avg,
     this.peakNB = pNb,
     this.peakSB = pSb,
     this.peak = p;
+    this.startDate = start;
+    this.endDate = end;
   };
 
 /////////////////////////////Hourly Data Average//////////////////////////////////
@@ -257,9 +280,9 @@
     var dataObj = {};
     data.forEach(function(eachHour, idx){
       dataObj.hour = hoursOfDay[idx];
-      dataObj.avg = eachHour;
-      dataObj.avgNb = data2[idx];
-      dataObj.avgSb = data3[idx];
+      dataObj.avg = parseInt(eachHour);
+      dataObj.avgNb = parseInt(data2[idx]);
+      dataObj.avgSb = parseInt(data3[idx]);
       traffic.hourlyDataToDisplay.push(new HourlyDataObj(dataObj));
     });
   };
@@ -342,9 +365,9 @@
     var dataObj = {};
     data[0].forEach(function(eachDay, idx){
       dataObj.day = daysOfWeek[idx];
-      dataObj.avg = eachDay;
-      dataObj.avgNb = data[1][idx];
-      dataObj.avgSb = data[2][idx];
+      dataObj.avg = parseInt(eachDay);
+      dataObj.avgNb = parseInt(data[1][idx]);
+      dataObj.avgSb = parseInt(data[2][idx]);
       traffic.dailyDataToDisplay.push(new AvgDataObj(dataObj));
     });
   };
@@ -382,9 +405,9 @@
     var dataObj = {};
     data[0].forEach(function(eachMonth, idx){
       dataObj.month = months[idx];
-      dataObj.avg = eachMonth;
-      dataObj.avgNb = data[1][idx];
-      dataObj.avgSb = data[2][idx];
+      dataObj.avg = parseInt(eachMonth);
+      dataObj.avgNb = parseInt(data[1][idx]);
+      dataObj.avgSb = parseInt(data[2][idx]);
       traffic.monthlyDataToDisplay.push(new AvgMonthlyObj(dataObj));
     });
 
