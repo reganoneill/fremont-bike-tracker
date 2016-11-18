@@ -57,31 +57,29 @@
           totalNorth : totalNb,
           totalSouth : totalSb
         };
-        console.log(obj);
-        localStorage.setItem('lastUpdated', lastUpdated);
+        localStorage.setItem('lastUpdated', JSON.stringify(lastUpdated));
         localStorage.setItem('initialObj', JSON.stringify(obj));
         traffic.initialObj = obj;
-
-
       }
     });
-    return obj;
+    return traffic.initialObj;
   };
 
   traffic.getInitial = function() {
     var initialObj = {};
     var limit = '?$limit=1';
+    //if this exists, do this
     if(localStorage.initialObj){
       $.ajax({
         url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + limit,
         type: 'GET',
         success: function(data, message, xhr){
           var lastUpdated = xhr.getResponseHeader('Last-Modified');
-          if (!localStorage.lastUpdated || lastUpdated !== localStorage.lastUpdated){
-            console.log('different');
+          if (!localStorage.lastUpdated || JSON.stringify(lastUpdated) !== localStorage.lastUpdated){
+            console.log('the data has changed since we were last here');
             traffic.initialObj = traffic.initialValues();
-            localStorage.setItem('initialObj', initialObj);
-            localStorage.setItem('lastUpdated', lastUpdated);
+            // localStorage.setItem('initialObj', JSON.stringify(initialObj));
+            localStorage.setItem('lastUpdated', JSON.stringify(lastUpdated));
           } else {
             traffic.initialObj = JSON.parse(localStorage.initialObj);
             traffic.loadImmediately();
@@ -97,7 +95,6 @@
 
   traffic.requestTraffic = function(callback) {
     total = 0;
-
     var add;
     if (traffic.limitDates){
       if(traffic.limitDates2){

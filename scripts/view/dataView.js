@@ -85,7 +85,8 @@
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + addToQueryString,
       type: 'GET',
       success: function(data, message, xhr){
-        if (!localStorage.lastUpdated || localStorage.lastUpdated !== xhr.getResponseHeader('Last-Modified')){
+        var lastUpdated = xhr.getResponseHeader('Last-Modified');
+        if (!localStorage.lastUpdated || JSON.stringify(lastUpdated) !== localStorage.lastUpdated){
         traffic.loadAll(data);
         var totalNb = 0;
         var totalSb = 0;
@@ -95,20 +96,23 @@
           totalNb += nb;
           totalSb += sb;
         });
-        var totaltotalCurrentBikers = totalNb + totalSb;
+        var totalCurrentBikers = totalNb + totalSb;
         obj = {
-          total : totaltotalCurrentBikers,
+          total : totalCurrentBikers,
           totalNorth : totalNb,
           totalSouth : totalSb
         };
         localStorage.setItem('recentStats', JSON.stringify(obj));
+        console.log('recentStats should now be in localStorage!');
+        traffic.recentMonthObj = obj;
        }//end if
         else{
+          console.log('this is what is fucking everything up');
          var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
+         console.log('yep');
           $('.initial-monthly-vals').append('Total bike crossings from the previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
           console.log('all good! we are up to date');
       }//end else
-
     }//end success
   });//end ajax request
 
