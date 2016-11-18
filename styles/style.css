@@ -134,11 +134,11 @@ h3 {
 }
 
 .Northbound .bar{
-  fill: red;
+  fill: #FF4500;
 }
 
 .Southbound .bar{
-  fill: blue;
+  fill: #4169E1;
 }
 
 .axisWhite line{
@@ -168,6 +168,12 @@ div.tooltip {
 
 .mouseover-color {
   fill: #0072ab;
+}
+.Northbound .mouseover-color {
+  fill:  #c29970;
+}
+.Southbound .mouseover-color {
+  fill: #FF4500;
 }
 
 /*
