@@ -1,6 +1,7 @@
 'use strict';
 (function(module) {
   var charts = {};
+
   charts.drawCharts = function() {
     var dataTraffic = traffic.allTraffic;
     var dataHourly = traffic.hourlyDataToDisplay;
@@ -386,9 +387,9 @@
     };
 
     if(traffic.allTraffic.length > 8760){
-      charts.displayMonthlyChart('avg', '.dataGraphMonthly','Total');
       charts.displayMonthlyChart('avgNb', '.dataGraphMonthlyNB','Northbound');
       charts.displayMonthlyChart('avgSb', '.dataGraphMonthlySB','Southbound');
+      charts.displayMonthlyChart('avg', '.dataGraphMonthly','Total');
     }
     if(traffic.allTraffic.length < 193){
       charts.displayDataTrafficChart('total', '.dataGraphTraffic', 'Total');
@@ -407,9 +408,7 @@
     charts.displayHourlyChart('avg', '.dataGraphHourly','Total');
     charts.displayHourlyChart('avgNb', '.dataGraphHourlyNB','Northbound');
     charts.displayHourlyChart('avgSb', '.dataGraphHourlySB','Southbound');
-
-    };
-
+  };
 
   module.charts = charts;
 })(window);
