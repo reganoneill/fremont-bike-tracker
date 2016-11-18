@@ -6,6 +6,7 @@
 
   $('#submit-dates').on('click', function(e){
     e.preventDefault();
+    $('.settings').fadeIn();
     if ($('input#from').val() === ''){
       traffic.limitDates = false;
     }
@@ -85,6 +86,7 @@
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + addToQueryString,
       type: 'GET',
       success: function(data, message, xhr){
+<<<<<<< HEAD
         var lastUpdated = xhr.getResponseHeader('Last-Modified');
         if (!localStorage.lastUpdated || JSON.stringify(lastUpdated) !== localStorage.lastUpdated){
         traffic.loadAll(data);
@@ -115,12 +117,79 @@
       }//end else
     }//end success
   });//end ajax request
+=======
+        if (!localStorage.lastUpdated || localStorage.lastUpdated !== xhr.getResponseHeader('Last-Modified')){
+          traffic.loadAll(data);
+          var totalNb = 0;
+          var totalSb = 0;
+          traffic.allTraffic.forEach(function(data){
+            var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
+            var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
+            totalNb += nb;
+            totalSb += sb;
+          });
+          var totaltotalCurrentBikers = totalNb + totalSb;
+          obj = {
+            total : totaltotalCurrentBikers,
+            totalNorth : totalNb,
+            totalSouth : totalSb
+          };
+          localStorage.setItem('recentStats', JSON.stringify(obj));
+        }//end if
+        else{
+          var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
+          $('.initial-monthly-vals').append('Total bike crossings from the previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
+          console.log('all good! we are up to date');
+        }//end else
+      }//end success
+    });//end ajax request
 
-//this works fine but isn't what the original function was made for
-  $('.initial-allTime-vals').append('Total Bike Crossings Since 1 January 2013 (the first full year data started to be collected): ' + traffic.initialObj.total + '</br> Total Northbound: ' + traffic.initialObj.totalNorth + '</br> Total Southbound: ' + traffic.initialObj.totalSouth);
+  //this works fine but isn't what the original function was made for
+    $('.initial-allTime-vals').append('Total Bike Crossings Since 1 January 2013 (the first full year data started to be collected): ' + traffic.initialObj.total + '</br> Total Northbound: ' + traffic.initialObj.totalNorth + '</br> Total Southbound: ' + traffic.initialObj.totalSouth);
+>>>>>>> 3425fc88ff6c417ab6e80da3129eb29db984da0b
 
-};
-// traffic.loadImmediately();
+  };
+
+  $('#totalToggle').change(function () {
+    if ($(this).is(':checked')) {
+      $('.dataGraphTrafficHourly, .dataGraphTraffic, .dataGraphHourly, .dataGraphDaily, .dataGraphMonthly').fadeIn();
+    } else {
+      $('.dataGraphTrafficHourly, .dataGraphTraffic, .dataGraphHourly, .dataGraphDaily, .dataGraphMonthly').hide();
+    }
+  });
+  $('#nbToggle').change(function () {
+    if ($(this).is(':checked')) {
+      $('.dataGraphTrafficHourlyNB, .dataGraphTrafficNB, .dataGraphHourlyNB, .dataGraphDailyNB, .dataGraphMonthlyNB').fadeIn();
+    } else {
+      $('.dataGraphTrafficHourlyNB, .dataGraphTrafficNB, .dataGraphHourlyNB, .dataGraphDailyNB, .dataGraphMonthlyNB').hide();
+    }
+  });
+  $('#sbToggle').change(function () {
+    if ($(this).is(':checked')) {
+      $('.dataGraphTrafficHourlySB, .dataGraphTrafficSB, .dataGraphHourlySB, .dataGraphDailySB, .dataGraphMonthlySB').fadeIn();
+    } else {
+      $('.dataGraphTrafficHourlySB, .dataGraphTrafficSB, .dataGraphHourlySB, .dataGraphDailySB, .dataGraphMonthlySB').hide();
+    }
+  });
+  // <div class="dataGraphTrafficHourly"></div>
+  // <div class="dataGraphTrafficHourlyNB"></div>
+  // <div class="dataGraphTrafficHourlySB"></div>
+  //
+  // <div class="dataGraphTraffic"></div>
+  // <div class="dataGraphTrafficNB"></div>
+  // <div class="dataGraphTrafficSB"></div>
+  //
+  // <div class="dataGraphHourly"></div>
+  // <div class="dataGraphHourlyNB"></div>
+  // <div class="dataGraphHourlySB"></div>
+  //
+  // <div class="dataGraphDaily"></div>
+  // <div class="dataGraphDailyNB"></div>
+  // <div class="dataGraphDailySB"></div>
+  //
+  // <div class="dataGraphMonthly"></div>
+  // <div class="dataGraphMonthlyNB"></div>
+  // <div class="dataGraphMonthlySB"></div>
 
 
   module.trafficView = trafficView;

@@ -134,11 +134,11 @@ h3 {
 }
 
 .Northbound .bar{
-  fill: red;
+  fill: #FF4500;
 }
 
 .Southbound .bar{
-  fill: blue;
+  fill: #4169E1;
 }
 
 .axisWhite line{
@@ -169,6 +169,109 @@ div.tooltip {
 .mouseover-color {
   fill: #0072ab;
 }
+.Northbound .mouseover-color {
+  fill:  #c29970;
+}
+.Southbound .mouseover-color {
+  fill: #FF4500;
+}
+
+/*
+
+Toggle Switches For Chart Viewing
+
+*/
+
+.settings {
+  display: table;
+  width: 80%;
+  display: none;
+
+}
+.settings .row {
+  display: table-row;
+  width: 60%;
+  margin: auto;
+
+}
+.settings .question,
+.settings .switch {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+  width: 100%;
+}
+.settings .question {
+  font-size: 1.1em;
+}
+
+.switch{
+
+}
+
+.cmn-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input.cmn-toggle-round + label {
+  padding: 2px;
+  width: 60px;
+  height: 30px;
+  background-color: #dddddd;
+  border-radius: 30px;
+}
+input.cmn-toggle-round + label:before, input.cmn-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+input.cmn-toggle-round + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 30px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round + label:after {
+  width: 29px;
+  background-color: #fff;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: margin 0.4s;
+}
+#totalToggle:checked + label:before{
+  background-color: #c29970;
+}
+#nbToggle:checked + label:before{
+  background-color: #FF4500;
+}
+#sbToggle:checked + label:before{
+  background-color: #0072ab;
+}
+input.cmn-toggle-round:checked + label:after {
+  margin-left: 30px;
+}
+
+.dataGraphTrafficHourlyNB, .dataGraphTrafficNB, .dataGraphHourlyNB, .dataGraphDailyNB, .dataGraphMonthlyNB,
+.dataGraphTrafficHourlySB, .dataGraphTrafficSB, .dataGraphHourlySB, .dataGraphDailySB, .dataGraphMonthlySB{
+  display: none;
+}
+
+
 
 /*
 

@@ -51,9 +51,40 @@
       <h3 class="dataTitle">Data</h3>
       <label for="from">From </label><input type="text" id="from" name="from">
       <label for="to"> to </label><input type="text" id="to" name="to">
-      <button id="submit-dates">Submit</button>
+      <button id="submit-dates">Submit</button><br />
+
       <section id="stats"></section>
       <div id="generalStats"></div>
+      <div class="settings">
+
+        <div class="row">
+          <div class="question">View Total Charts</div>
+          <div class="switch">
+            <input id="totalToggle" class="cmn-toggle cmn-toggle-round" type="checkbox" checked>
+            <label for="totalToggle"></label>
+          </div>
+        </div><!-- /row -->
+
+        <div class="row">
+          <div class="question">
+            View Northbound Charts
+          </div>
+          <div class="switch">
+            <input id="nbToggle" class="cmn-toggle cmn-toggle-round" type="checkbox">
+            <label for="nbToggle"></label>
+          </div>
+        </div><!-- /row -->
+
+        <div class="row">
+          <div class="question">
+            View Southbound Charts
+          </div>
+          <div class="switch">
+            <input id="sbToggle" class="cmn-toggle cmn-toggle-round" type="checkbox">
+            <label for="sbToggle"></label>
+          </div>
+        </div><!-- /row -->
+      </div>
       <div class="dataGraphTrafficHourly"></div>
       <div class="dataGraphTrafficHourlyNB"></div>
       <div class="dataGraphTrafficHourlySB"></div>
@@ -93,7 +124,6 @@
     <script src="vendor/scripts/page.js"></script>
     <script src="vendor/scripts/handlebars.js"></script>
     <script src="vendor/scripts/moment.js"></script>
-    <script src="vendor/scripts/d3-history.min.js"></script>
     <script src="scripts/view/d3graphs.js"></script>
     <script src="/scripts/model/data.js"></script>
     <script src="/scripts/model/profiles.js"></script>
