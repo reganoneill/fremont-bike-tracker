@@ -1,6 +1,7 @@
 'use strict';
 (function(module) {
   var traffic = {};
+  traffic.date1 = '', traffic.date2 = '';
   traffic.allTraffic = [];
   traffic.limitDates = false;
   traffic.limitDates2 = false;
@@ -33,7 +34,6 @@
 //
   traffic.initialValues = function(){
     var obj = {};
-    // 2013-01-01T00:00.000
     var add = '?$where=date>=%272013-01-01T00:00.000%27';
     var limit = '&$limit=50000';
     var order = '&$order=date';
@@ -41,6 +41,7 @@
       url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + add + limit + order,
       type: 'GET',
       success: function(data, message, xhr){
+        $('.initial-allTime-vals').empty();
         var lastUpdated = xhr.getResponseHeader('Last-Modified');
         traffic.loadAll(data);
         var totalNb = 0;
@@ -57,13 +58,51 @@
           totalNorth : totalNb,
           totalSouth : totalSb
         };
-        localStorage.setItem('lastUpdated', JSON.stringify(lastUpdated));
+        localStorage.setItem('lastUpdated', lastUpdated);
         localStorage.setItem('initialObj', JSON.stringify(obj));
         traffic.initialObj = obj;
+        $('.initial-allTime-vals').append('Total Bike Crossings Since 1 January 2013 (the first full year data started to be collected): ' + traffic.initialObj.total + '</br> Total Northbound: ' + traffic.initialObj.totalNorth + '</br> Total Southbound: ' + traffic.initialObj.totalSouth);
       }
-    });
-    return traffic.initialObj;
-  };
+    });// return traffic.initialObj;
+};
+traffic.initialValues2 = function(){
+      var monthObj = {};
+      var upToDate = new Date();
+      var upToDateYear = upToDate.getFullYear();
+      var upToDateMonth = upToDate.getMonth();
+      var addToQueryString = '?$where=date>=%27' + upToDateYear + '-' + upToDateMonth + '-01T00:00.000%27';
+      $.ajax({
+        url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + addToQueryString,
+        type: 'GET',
+        success: function(data, message, xhr){
+          $('.initial-monthly-vals').empty();
+          // if (!localStorage.lastUpdated || localStorage.lastUpdated != xhr.getResponseHeader('Last-Modified')){
+            traffic.loadAll(data);
+            var totalNb = 0;
+            var totalSb = 0;
+            traffic.allTraffic.forEach(function(data){
+              var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
+              var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
+              totalNb += nb;
+              totalSb += sb;
+            });
+            var totaltotalCurrentBikers = totalNb + totalSb;
+            monthObj = {
+              total : totaltotalCurrentBikers,
+              totalNorth : totalNb,
+              totalSouth : totalSb
+            };
+            console.log('trying here');
+            localStorage.setItem('recentStats', JSON.stringify(monthObj));
+
+            var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
+            $('.initial-monthly-vals').append('Total bike crossings from the previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
+            console.log('all good! we are up to date');
+
+           // }//end else
+        } //end success
+      }); //end 2nd ajax request
+    } //end method
 
   traffic.getInitial = function() {
     var initialObj = {};
@@ -75,14 +114,13 @@
         type: 'GET',
         success: function(data, message, xhr){
           var lastUpdated = xhr.getResponseHeader('Last-Modified');
-          if (!localStorage.lastUpdated || JSON.stringify(lastUpdated) !== localStorage.lastUpdated){
+          if (!localStorage.lastUpdated || lastUpdated !== localStorage.lastUpdated){
             console.log('the data has changed since we were last here');
             traffic.initialObj = traffic.initialValues();
             // localStorage.setItem('initialObj', JSON.stringify(initialObj));
-            localStorage.setItem('lastUpdated', JSON.stringify(lastUpdated));
+            localStorage.setItem('lastUpdated', lastUpdated);
           } else {
             traffic.initialObj = JSON.parse(localStorage.initialObj);
-            traffic.loadImmediately();
           }
         }//end success
       });//end ajax
@@ -91,7 +129,7 @@
       initialObj = traffic.initialValues();
     }
     return initialObj;
-  };
+  };//end of getInitial method
 
   traffic.requestTraffic = function(callback) {
     total = 0;
@@ -250,7 +288,7 @@
     traffic.submitCount++;
     traffic.displayGeneralStats();
     charts.drawCharts();
-  };
+  }; //end calcNumbers method
 /////////////////////////////General Data//////////////////////////////////////
   traffic.generalDataToDisplay = [];
   function GeneralDataObj(nod, tot, avg, pNb, pSb, p, start, end){
@@ -417,6 +455,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////
   traffic.initialObj = traffic.getInitial();
-
+  traffic.initialValues2();
+  traffic.initialValues();
   module.traffic = traffic;
 })(window);

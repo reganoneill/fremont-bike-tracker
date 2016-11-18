@@ -1,6 +1,5 @@
 'use strict';
 (function(module) {
-
   var trafficView = {};
   traffic.date1 = '', traffic.date2 = '';
 
@@ -77,76 +76,43 @@
   traffic.datePick();
 
   traffic.loadImmediately = function(){
-    var obj = {};
-    var upToDate = new Date();
-    var upToDateYear = upToDate.getFullYear();
-    var upToDateMonth = upToDate.getMonth();
-    var addToQueryString = '?$where=date>=%27' + upToDateYear + '-' + upToDateMonth + '-01T00:00.000%27';
-    $.ajax({
-      url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + addToQueryString,
-      type: 'GET',
-      success: function(data, message, xhr){
-<<<<<<< HEAD
-        var lastUpdated = xhr.getResponseHeader('Last-Modified');
-        if (!localStorage.lastUpdated || JSON.stringify(lastUpdated) !== localStorage.lastUpdated){
-        traffic.loadAll(data);
-        var totalNb = 0;
-        var totalSb = 0;
-        traffic.allTraffic.forEach(function(data){
-          var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
-          var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
-          totalNb += nb;
-          totalSb += sb;
-        });
-        var totalCurrentBikers = totalNb + totalSb;
-        obj = {
-          total : totalCurrentBikers,
-          totalNorth : totalNb,
-          totalSouth : totalSb
-        };
-        localStorage.setItem('recentStats', JSON.stringify(obj));
-        console.log('recentStats should now be in localStorage!');
-        traffic.recentMonthObj = obj;
-       }//end if
-        else{
-          console.log('this is what is fucking everything up');
-         var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
-         console.log('yep');
-          $('.initial-monthly-vals').append('Total bike crossings from the previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
-          console.log('all good! we are up to date');
-      }//end else
-    }//end success
-  });//end ajax request
-=======
-        if (!localStorage.lastUpdated || localStorage.lastUpdated !== xhr.getResponseHeader('Last-Modified')){
-          traffic.loadAll(data);
-          var totalNb = 0;
-          var totalSb = 0;
-          traffic.allTraffic.forEach(function(data){
-            var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
-            var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
-            totalNb += nb;
-            totalSb += sb;
-          });
-          var totaltotalCurrentBikers = totalNb + totalSb;
-          obj = {
-            total : totaltotalCurrentBikers,
-            totalNorth : totalNb,
-            totalSouth : totalSb
-          };
-          localStorage.setItem('recentStats', JSON.stringify(obj));
-        }//end if
-        else{
-          var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
-          $('.initial-monthly-vals').append('Total bike crossings from the previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
-          console.log('all good! we are up to date');
-        }//end else
-      }//end success
-    });//end ajax request
+    // var obj = {};
+    // var upToDate = new Date();
+    // var upToDateYear = upToDate.getFullYear();
+    // var upToDateMonth = upToDate.getMonth();
+    // var addToQueryString = '?$where=date>=%27' + upToDateYear + '-' + upToDateMonth + '-01T00:00.000%27';
+    // $.ajax({
+    //   url: 'https://data.seattle.gov/resource/4xy5-26gy.json' + addToQueryString,
+    //   type: 'GET',
+    //   success: function(data, message, xhr){
+    //     if (!localStorage.lastUpdated || localStorage.lastUpdated != xhr.getResponseHeader('Last-Modified')){
+    //       traffic.loadAll(data);
+    //       var totalNb = 0;
+    //       var totalSb = 0;
+    //       traffic.allTraffic.forEach(function(data){
+    //         var nb = (isNaN(data.fremont_bridge_nb)) ? 0 : parseInt(data.fremont_bridge_nb);
+    //         var sb = (isNaN(data.fremont_bridge_sb)) ? 0 : parseInt(data.fremont_bridge_sb);
+    //         totalNb += nb;
+    //         totalSb += sb;
+    //       });
+    //       var totaltotalCurrentBikers = totalNb + totalSb;
+    //       obj = {
+    //         total : totaltotalCurrentBikers,
+    //         totalNorth : totalNb,
+    //         totalSouth : totalSb
+    //       };
+    //       localStorage.recentStats = obj;
+    //     }//end if
+    //     else{
+    //       var displayFirstLoadVals = localStorage.recentStats;
+    //       console.log(displayFirstLoadVals, 'shit');
+    //       $('.initial-monthly-vals').append('Total bike crossings from the previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
+    //       console.log('all good! we are up to date');
+    //     }//end else
+    //   }//end success
+    // });//end ajax request
 
-  //this works fine but isn't what the original function was made for
-    $('.initial-allTime-vals').append('Total Bike Crossings Since 1 January 2013 (the first full year data started to be collected): ' + traffic.initialObj.total + '</br> Total Northbound: ' + traffic.initialObj.totalNorth + '</br> Total Southbound: ' + traffic.initialObj.totalSouth);
->>>>>>> 3425fc88ff6c417ab6e80da3129eb29db984da0b
+    // $('.initial-allTime-vals').append('Total Bike Crossings Since 1 January 2013 (the first full year data started to be collected): ' + traffic.initialObj.total + '</br> Total Northbound: ' + traffic.initialObj.totalNorth + '</br> Total Southbound: ' + traffic.initialObj.totalSouth);
 
   };
 
