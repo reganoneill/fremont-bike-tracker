@@ -390,15 +390,25 @@
       charts.displayMonthlyChart('avgNb', '.dataGraphMonthlyNB','Northbound');
       charts.displayMonthlyChart('avgSb', '.dataGraphMonthlySB','Southbound');
       charts.displayMonthlyChart('avg', '.dataGraphMonthly','Total');
+    } else{
+      $('.dataGraphMonthlyNB').empty();
+      $('.dataGraphMonthlySB').empty();
+      $('.dataGraphMonthly').empty();
     }
     if(traffic.allTraffic.length < 193){
       charts.displayDataTrafficChart('total', '.dataGraphTraffic', 'Total');
       charts.displayDataTrafficChart('fremont_bridge_nb', '.dataGraphTrafficNB', 'Northbound');
       charts.displayDataTrafficChart('fremont_bridge_nb', '.dataGraphTrafficSB', 'Southbound');
+      $('.dataGraphDaily').empty();
+      $('.dataGraphDailyNB').empty();
+      $('.dataGraphDailySB').empty();
     } else {
       charts.displayDailyChart('avg', '.dataGraphDaily','Total');
       charts.displayDailyChart('avgNb', '.dataGraphDailyNB','Northbound');
       charts.displayDailyChart('avgSb', '.dataGraphDailySB','Southbound');
+      $('.dataGraphTraffic').empty();
+      $('.dataGraphTrafficNB').empty();
+      $('.dataGraphTrafficSB').empty();
     }
     if(traffic.allTraffic.length > 24){
       charts.displayDataTrafficByDayChart('total', '.dataGraphTrafficHourly', 'Total');
