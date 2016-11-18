@@ -61,7 +61,7 @@
         localStorage.setItem('lastUpdated', lastUpdated);
         localStorage.setItem('initialObj', JSON.stringify(obj));
         traffic.initialObj = obj;
-        $('.initial-allTime-vals').append('Total Bike Crossings Since 1 January 2013 (the first full year data started to be collected): ' + traffic.initialObj.total + '</br> Total Northbound: ' + traffic.initialObj.totalNorth + '</br> Total Southbound: ' + traffic.initialObj.totalSouth);
+        $('.initial-allTime-vals').append('Total Since 1 January 2013: ' + traffic.initialObj.total + ' - Total Northbound: ' + traffic.initialObj.totalNorth + ' - Total Southbound: ' + traffic.initialObj.totalSouth);
       }
     });// return traffic.initialObj;
 };
@@ -96,9 +96,7 @@ traffic.initialValues2 = function(){
             localStorage.setItem('recentStats', JSON.stringify(monthObj));
 
             var displayFirstLoadVals = JSON.parse(localStorage.recentStats);
-            $('.initial-monthly-vals').append('Total bike crossings from the previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + '</br> Total northbound bikers: ' + displayFirstLoadVals.totalNorth + '</br> Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
-            console.log('all good! we are up to date');
-
+            $('.initial-monthly-vals').append('Totals from previous month ( ' + upToDateMonth + '/' + upToDateYear + ' ) : ' + displayFirstLoadVals.total + ' - Total northbound bikers: ' + displayFirstLoadVals.totalNorth + ' - Total southbound bikers: ' + displayFirstLoadVals.totalSouth);
            // }//end else
         } //end success
       }); //end 2nd ajax request
