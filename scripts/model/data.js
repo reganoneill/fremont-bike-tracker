@@ -146,7 +146,7 @@ traffic.initialValues2 = function(){
         add = '?$where=date>=%272013-01-01T00:00.000%27%20AND%20date%3C=%27' + traffic.date2.getFullYear() + '-' + (traffic.date2.getMonth() + 1) + '-' + traffic.date2.getDate() + 'T23:00.000%27';
         traffic.date1 = '01 January 2013';
       } else {
-        add = '?$where=date>=%272016-10-01T00:00.000%27';
+        add = '?$where=date>=%272013-01-01T00:00.000%27';
         traffic.date1 = '01 January 2013';
         traffic.date2 = 'Present';
       }
